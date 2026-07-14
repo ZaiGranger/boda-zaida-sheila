@@ -3,7 +3,8 @@
  * Controla invitación, navegación, formularios, galería, juego y más.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadPublicConfig();
   applyConfig();
   initEnvelope();
   initNavigation();
@@ -26,6 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // =============================================================================
 // CONFIGURACIÓN
 // =============================================================================
+
+/** Carga playlist Spotify desde Render (variables de entorno) si existen */
+async function loadPublicConfig() {
+  try {
+    const data = await (await fetch('/api/public-config')).json();
+    if (data.spotifyPlaylistUrl) WEDDING_CONFIG.spotifyPlaylistUrl = data.spotifyPlaylistUrl;
+    if (data.spotifyPlaylistTitle) WEDDING_CONFIG.spotifyPlaylistTitle = data.spotifyPlaylistTitle;
+  } catch { /* usa valores de config.js */ }
+}
+
 function applyConfig() {
   const { bride1, bride2, venue, giftMessage, couplePhoto, hashtag } = WEDDING_CONFIG;
   const initials = `${bride1.charAt(0)}&${bride2.charAt(0)}`;

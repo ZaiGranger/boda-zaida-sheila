@@ -14,3 +14,7 @@ services:
         sync: false
       - key: SPOTIFY_CLIENT_SECRET
         sync: false
+      - key: SPOTIFY_PLAYLIST_URL
+        sync: false
+      - key: SPOTIFY_PLAYLIST_TITLE
+        sync: false

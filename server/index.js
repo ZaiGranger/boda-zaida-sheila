@@ -23,6 +23,10 @@ const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ZaidaSheila2027';
 
+// Playlist colaborativa (configurable en Render sin tocar código)
+const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || '';
+const SPOTIFY_PLAYLIST_TITLE = process.env.SPOTIFY_PLAYLIST_TITLE || 'Playlist boda Zaida & Sheila';
+
 [UPLOADS_DIR, DATA_DIR].forEach((dir) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
@@ -38,6 +42,14 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(UPLOADS_DIR));
 app.use(express.static(ROOT_DIR));
+
+// Config pública (playlist Spotify desde variables de entorno en Render)
+app.get('/api/public-config', (_req, res) => {
+  res.json({
+    spotifyPlaylistUrl: SPOTIFY_PLAYLIST_URL,
+    spotifyPlaylistTitle: SPOTIFY_PLAYLIST_TITLE,
+  });
+});
 
 const upload = multer({
   storage: multer.diskStorage({
