@@ -10,8 +10,8 @@ const WEDDING_CONFIG = {
   eventEnd: '01:00', // del día siguiente
   hashtag: '#ZaidaYSheila2027',
 
-  // URL pública de la web (importante para el QR). En local: http://localhost:3001
-  siteUrl: '',
+  // URL pública (Render). Actualizar si cambia el nombre del servicio.
+  siteUrl: 'https://boda-zaida-sheila.onrender.com',
 
   venue: {
     name: 'Ceremonia',
