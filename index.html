@@ -23,8 +23,8 @@
     <!-- Textura de grano sutil para aspecto premium -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Decoración acuarela sutil -->
-    <div class="botanical-bg hidden" aria-hidden="true"></div>
+    <!-- Fondo de hojas acuarela en toda la web -->
+    <div class="page-leaves-bg" aria-hidden="true"></div>
 
     <!-- Barra de progreso de lectura -->
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
@@ -68,14 +68,6 @@
         </div>
       </div>
 
-      <!-- Sobre 3D (animación al abrir) -->
-      <div class="envelope envelope--hidden" id="envelope" aria-hidden="true">
-        <div class="envelope-letter-card" id="envelope-letter-card">
-          <p class="letter-eyebrow">Estáis invitados</p>
-          <p class="letter-names" id="letter-names">Zaida & Sheila</p>
-          <p class="letter-date" id="letter-date">04 · 09 · 2027</p>
-        </div>
-      </div>
     </div>
 
     <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
@@ -100,11 +92,8 @@
         </div>
       </header>
 
-      <!-- HERO acuarela -->
+      <!-- HERO — inicio con más aire y sin elementos apelotonados -->
       <section id="hero" class="hero hero--watercolor">
-        <div class="hero-bg">
-          <img src="images/watercolor-eucalyptus.png" alt="" class="hero-eucalyptus" aria-hidden="true" />
-        </div>
         <div class="hero-content reveal">
           <p class="eyebrow">Nos casamos</p>
           <h1 class="hero-title hero-title--script" id="hero-names">Zaida <em>&</em> Sheila</h1>
@@ -204,41 +193,32 @@
         </div>
       </section>
 
-      <!-- ILUSTRACIONES ACUARELA -->
-      <section id="watercolor" class="section section--watercolor">
-        <div class="container">
-          <header class="section-header reveal">
-            <p class="eyebrow">Nuestro amor</p>
-            <h2 class="section-title section-title--script">En acuarela</h2>
-            <p class="section-desc">Tres historias, un mismo sentimiento: celebrar el amor</p>
-          </header>
-          <div class="watercolor-gallery reveal">
-            <figure class="watercolor-card watercolor-card--featured">
-              <img src="images/watercolor-couple-ff.png" alt="Dos mujeres en acuarela" loading="lazy" />
-              <figcaption>Zaida & Sheila</figcaption>
-            </figure>
-            <figure class="watercolor-card">
-              <img src="images/watercolor-couple-mf.png" alt="Pareja en acuarela" loading="lazy" />
-              <figcaption>Chica & chico</figcaption>
-            </figure>
-            <figure class="watercolor-card">
-              <img src="images/watercolor-couple-mm.png" alt="Dos chicos en acuarela" loading="lazy" />
-              <figcaption>Dos chicos</figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      <!-- CÓDIGO DE VESTIMENTA -->
+      <!-- CÓDIGO DE VESTIMENTA — ejemplos en acuarela -->
       <section id="dresscode" class="section dresscode-section">
         <div class="container">
           <div class="dresscode-card reveal">
-            <img src="images/watercolor-couple-ff.png" alt="" class="dresscode-watercolor" aria-hidden="true" />
             <header class="section-header section-header--compact">
               <p class="eyebrow">Dress code</p>
-              <h2 class="section-title" id="dresscode-title">Elegante</h2>
+              <h2 class="section-title section-title--script" id="dresscode-title">Ven como quieras</h2>
             </header>
             <p class="dresscode-desc" id="dresscode-desc"></p>
+
+            <!-- Tres ilustraciones acuarela como inspiración de vestimenta -->
+            <div class="dresscode-gallery" aria-label="Ejemplos de vestimenta en acuarela">
+              <figure class="dresscode-figure dresscode-figure--featured">
+                <img src="images/watercolor-couple-ff.png" alt="Ejemplo elegante: dos mujeres" loading="lazy" />
+                <figcaption>Elegante · dos mujeres</figcaption>
+              </figure>
+              <figure class="dresscode-figure">
+                <img src="images/watercolor-couple-mf.png" alt="Ejemplo elegante: chica y chico" loading="lazy" />
+                <figcaption>Elegante · chica y chico</figcaption>
+              </figure>
+              <figure class="dresscode-figure">
+                <img src="images/watercolor-couple-mm.png" alt="Ejemplo elegante: dos chicos" loading="lazy" />
+                <figcaption>Elegante · dos chicos</figcaption>
+              </figure>
+            </div>
+
             <ul class="dresscode-tips" id="dresscode-tips"></ul>
           </div>
         </div>

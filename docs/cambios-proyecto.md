@@ -1,6 +1,21 @@
 # Cambios del proyecto
 
-## 2026-07-14 — Playlist Spotify colaborativa + sugerencias manuales (feature)
+## 2026-07-14 — Ajustes acuarela: dresscode, sobre grande y fondo hojas (enhancement)
+
+**Archivos:** `index.html`, `styles/watercolor.css`, `js/main.js`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Acuarelas solo en dresscode; eliminada sección "En acuarela"; sobre más grande sin cuadrado duplicado; fondo eucalipto en toda la web; hero con más espacio.
+
+## 2026-07-14 — Rediseño acuarela estilo invitación premium (enhancement)
+
+**Archivos:** `styles/watercolor.css`, `index.html`, `images/watercolor-*.png`, `js/main.js`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Sobre tipo papel con sello de cera, solapas animadas, paleta crema, eucalipto acuarela, 3 ilustraciones de parejas, "Minuto a minuto" en lugar de Programa.
+
 
 **Archivos:** `index.html`, `js/main.js`, `js/config.js`, `styles/main.css`
 

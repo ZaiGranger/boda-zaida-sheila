@@ -56,13 +56,12 @@ function applyConfig() {
   const envelopeNames = document.getElementById('envelope-names');
   if (envelopeNames) envelopeNames.innerHTML = `${bride1} <span>&</span> ${bride2}`;
 
-  ['countdown-names', 'letter-names'].forEach((id) => setText(id, namesText));
+  ['countdown-names'].forEach((id) => setText(id, namesText));
 
   const dateShort = new Date(WEDDING_CONFIG.weddingDate).toLocaleDateString('es-ES', {
     day: '2-digit', month: '2-digit', year: 'numeric',
   }).replace(/\//g, ' · ');
   setText('envelope-date', dateShort);
-  setText('letter-date', dateShort);
   setText('hero-date', dateFormatted);
 
   setText('venue-address', venue.address);
