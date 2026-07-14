@@ -63,13 +63,15 @@ body {
   inset: 0;
 }
 
-/* Esquinas con SVG (sin fondo blanco) */
+/* Esquinas con SVG inline (sin petición externa, sin iconos rotos en móvil) */
 .leaves-corner {
   position: absolute;
   width: min(320px, 36vw);
-  height: auto;
+  height: min(320px, 36vw);
   opacity: 0.7;
   filter: saturate(0.95);
+  overflow: visible;
+  pointer-events: none;
 }
 .leaves-corner--tl { top: -8px; left: -8px; }
 .leaves-corner--tr { top: -8px; right: -8px; transform: scaleX(-1); }
@@ -132,7 +134,11 @@ body {
 }
 
 @media (max-width: 768px) {
-  .leaves-corner { width: min(200px, 44vw); opacity: 0.55; }
+  .leaves-corner {
+    width: min(180px, 40vw);
+    height: min(180px, 40vw);
+    opacity: 0.55;
+  }
   .leaves-vine--left,
   .leaves-vine--right { opacity: 0.3; width: min(140px, 22vw); }
   .leaves-vine--top,

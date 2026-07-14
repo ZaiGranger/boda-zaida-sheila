@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — Fix iconos rotos hojas en móvil (bug fix)
+
+**Archivos:** `index.html`, `styles/watercolor.css`
+
+**Tipo:** bug fix
+
+**Qué se cambió:** SVG de esquinas embebido inline en lugar de `<img>` externo; desaparecen los cuadrados azules con interrogante en móvil.
+
 ## 2026-07-14 — Marco de hojas acuarela en bordes con fondo translúcido (enhancement)
 
 **Archivos:** `index.html`, `styles/watercolor.css`, `images/leaves-corner.svg`
