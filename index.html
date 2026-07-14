@@ -23,10 +23,24 @@
     <!-- Textura de grano sutil para aspecto premium -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Hojas acuarela en laterales — solo tras abrir la invitación -->
+    <!-- Marco decorativo de hojas acuarela — visible tras abrir la invitación -->
     <div class="page-leaves-bg" id="page-leaves-bg" aria-hidden="true">
-      <img src="images/watercolor-eucalyptus.png" alt="" class="leaves-edge leaves-edge--left" />
-      <img src="images/watercolor-eucalyptus.png" alt="" class="leaves-edge leaves-edge--right" />
+      <!-- Velo translúcido verde-crema que unifica el fondo -->
+      <div class="leaves-wash"></div>
+
+      <!-- Hojas en las 4 esquinas (marco tipo corona) -->
+      <div class="leaves-frame">
+        <img src="images/leaves-corner.svg" alt="" class="leaves-corner leaves-corner--tl" />
+        <img src="images/leaves-corner.svg" alt="" class="leaves-corner leaves-corner--tr" />
+        <img src="images/leaves-corner.svg" alt="" class="leaves-corner leaves-corner--bl" />
+        <img src="images/leaves-corner.svg" alt="" class="leaves-corner leaves-corner--br" />
+
+        <!-- Ramas acuarela a lo largo de los laterales -->
+        <div class="leaves-vine leaves-vine--left" role="presentation"></div>
+        <div class="leaves-vine leaves-vine--right" role="presentation"></div>
+        <div class="leaves-vine leaves-vine--top" role="presentation"></div>
+        <div class="leaves-vine leaves-vine--bottom" role="presentation"></div>
+      </div>
     </div>
 
     <!-- Barra de progreso de lectura -->

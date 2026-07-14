@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — Marco de hojas acuarela en bordes con fondo translúcido (enhancement)
+
+**Archivos:** `index.html`, `styles/watercolor.css`, `images/leaves-corner.svg`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Marco de hojas en 4 esquinas + laterales con velo translúcido; sin cajas blancas; secciones más transparentes para armonía visual.
+
 ## 2026-07-14 — Hojas laterales solo tras abrir + dresscode sin etiquetas (enhancement)
 
 **Archivos:** `index.html`, `styles/watercolor.css`, `js/main.js`

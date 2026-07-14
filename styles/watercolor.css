@@ -27,7 +27,10 @@ body {
   font-family: var(--font-serif);
 }
 
-/* Hojas de eucalipto — laterales, sin caja blanca, solo tras abrir invitación */
+/* ==========================================================================
+   MARCO DE HOJAS ACUARELA — bordes de la página, fondo translúcido
+   Inspirado en invitaciones con corona floral en los bordes
+   ========================================================================== */
 .page-leaves-bg {
   position: fixed;
   inset: 0;
@@ -36,36 +39,107 @@ body {
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 1.4s ease, visibility 1.4s ease;
+  transition: opacity 1.6s ease, visibility 1.6s ease;
 }
 .page-leaves-bg.is-visible {
   opacity: 1;
   visibility: visible;
 }
 
-/* multiply hace que el blanco del PNG se funda con el fondo crema */
-.leaves-edge {
+/* Velo suave verde-crema que envuelve toda la página */
+.leaves-wash {
   position: absolute;
-  width: min(380px, 32vw);
-  height: auto;
-  mix-blend-mode: multiply;
-  opacity: 0.55;
-  filter: saturate(0.9);
-}
-.leaves-edge--left {
-  left: -3%;
-  top: 6%;
-  transform: rotate(-88deg) scaleX(-1);
-  transform-origin: top left;
-}
-.leaves-edge--right {
-  right: -3%;
-  top: 6%;
-  transform: rotate(88deg);
-  transform-origin: top right;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 0% 0%, rgba(138, 171, 154, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 0%, rgba(138, 171, 154, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(138, 171, 154, 0.1) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(138, 171, 154, 0.1) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(245, 240, 232, 0.15) 0%, transparent 80%);
 }
 
-/* El contenido va por encima del fondo de hojas */
+.leaves-frame {
+  position: absolute;
+  inset: 0;
+}
+
+/* Esquinas con SVG (sin fondo blanco) */
+.leaves-corner {
+  position: absolute;
+  width: min(320px, 36vw);
+  height: auto;
+  opacity: 0.7;
+  filter: saturate(0.95);
+}
+.leaves-corner--tl { top: -8px; left: -8px; }
+.leaves-corner--tr { top: -8px; right: -8px; transform: scaleX(-1); }
+.leaves-corner--bl { bottom: -8px; left: -8px; transform: scaleY(-1); }
+.leaves-corner--br { bottom: -8px; right: -8px; transform: scale(-1, -1); }
+
+/* Ramas acuarela en los bordes — multiply funde el blanco con el crema */
+.leaves-vine {
+  position: absolute;
+  background-color: var(--paper);
+  background-image: url('../images/watercolor-eucalyptus.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: multiply;
+  opacity: 0.45;
+  filter: saturate(0.85);
+  /* Desvanece hacia el centro para que no haya borde duro */
+  -webkit-mask-image: linear-gradient(to right, black 20%, transparent 100%);
+  mask-image: linear-gradient(to right, black 20%, transparent 100%);
+}
+.leaves-vine--left {
+  left: 0;
+  top: 12%;
+  width: min(220px, 20vw);
+  height: min(480px, 55vh);
+  background-position: left center;
+}
+.leaves-vine--right {
+  right: 0;
+  top: 12%;
+  width: min(220px, 20vw);
+  height: min(480px, 55vh);
+  background-position: right center;
+  transform: scaleX(-1);
+  -webkit-mask-image: linear-gradient(to left, black 20%, transparent 100%);
+  mask-image: linear-gradient(to left, black 20%, transparent 100%);
+}
+.leaves-vine--top {
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: min(100px, 12vh);
+  background-position: center top;
+  background-size: min(700px, 80vw) auto;
+  opacity: 0.32;
+  -webkit-mask-image: linear-gradient(to bottom, black 15%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 15%, transparent 100%);
+}
+.leaves-vine--bottom {
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: min(100px, 12vh);
+  background-position: center bottom;
+  background-size: min(700px, 80vw) auto;
+  opacity: 0.28;
+  transform: scaleY(-1);
+  -webkit-mask-image: linear-gradient(to top, black 15%, transparent 100%);
+  mask-image: linear-gradient(to top, black 15%, transparent 100%);
+}
+
+@media (max-width: 768px) {
+  .leaves-corner { width: min(200px, 44vw); opacity: 0.55; }
+  .leaves-vine--left,
+  .leaves-vine--right { opacity: 0.3; width: min(140px, 22vw); }
+  .leaves-vine--top,
+  .leaves-vine--bottom { display: none; }
+}
+
+/* El contenido va por encima del marco de hojas */
 .main-content {
   position: relative;
   z-index: 2;
@@ -287,8 +361,9 @@ body {
    NAVEGACIÓN — Barra crema superior
    ========================================================================== */
 .nav.scrolled {
-  background: rgba(232, 224, 212, 0.95);
+  background: rgba(232, 224, 212, 0.82);
   border-bottom: 1px solid rgba(58,58,58,0.08);
+  backdrop-filter: blur(8px);
 }
 .nav-brand {
   font-family: var(--font-script);
@@ -352,21 +427,21 @@ body {
   gap: 1.25rem;
 }
 
-/* Secciones con fondo semitransparente para dejar ver las hojas */
+/* Secciones translúcidas para que el marco de hojas se vea en armonía */
 .section {
-  background: rgba(245, 240, 232, 0.72);
+  background: rgba(245, 240, 232, 0.55);
 }
 .section--alt {
-  background: rgba(235, 228, 216, 0.78);
+  background: rgba(235, 228, 216, 0.6);
 }
 .section--dark {
-  background: rgba(232, 224, 212, 0.88) !important;
+  background: rgba(232, 224, 212, 0.72) !important;
   color: var(--ink) !important;
 }
 .section--floral {
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(181, 207, 192, 0.15) 0%, transparent 50%),
-    rgba(235, 228, 216, 0.78) !important;
+    radial-gradient(ellipse at 20% 30%, rgba(181, 207, 192, 0.12) 0%, transparent 50%),
+    rgba(235, 228, 216, 0.6) !important;
 }
 
 .section-title--script {
@@ -384,7 +459,7 @@ body {
 /* Dress code — galería acuarela con ejemplos de vestimenta */
 .dresscode-card {
   max-width: 920px !important;
-  background: rgba(255, 255, 255, 0.55) !important;
+  background: rgba(255, 255, 255, 0.42) !important;
   border: 1px solid rgba(58, 58, 58, 0.08) !important;
   text-align: center;
   padding: 3.5rem 2rem !important;
@@ -446,7 +521,7 @@ body {
 
 /* Footer */
 .footer {
-  background: rgba(232, 224, 212, 0.9) !important;
+  background: rgba(232, 224, 212, 0.75) !important;
   color: var(--ink-muted);
 }
 .footer-monogram {
