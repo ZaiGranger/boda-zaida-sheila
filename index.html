@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Invitación a la boda de Zaida y Sheila — 4 de septiembre de 2027, Valencia" />
+    <meta property="og:title" content="Zaida & Sheila — Nos casamos" />
+    <meta property="og:description" content="4 de septiembre de 2027 · Valencia. ¡Confirma tu asistencia!" />
+    <title>Zaida & Sheila · 04·09·2027</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>" />
+  </head>
+  <body>
+    <!-- Textura de grano sutil para aspecto premium -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- Barra de progreso de lectura -->
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ==================== PANTALLA DE INVITACIÓN (SOBRE) ==================== -->
+    <div id="envelope-screen" class="envelope-screen">
+      <div class="envelope-particles" aria-hidden="true"></div>
+      <div class="envelope-container">
+        <div class="wax-seal" aria-hidden="true">
+          <span class="seal-monogram" id="seal-monogram">Z&S</span>
+        </div>
+
+        <div class="envelope" id="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-body">
+            <div class="envelope-letter">
+              <p class="letter-line">Estáis invitados</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="envelope-pretitle">La boda de</p>
+        <h1 class="envelope-names" id="envelope-names">Zaida & Sheila</h1>
+        <p class="envelope-date" id="envelope-date">04 · 09 · 2027</p>
+        <p class="envelope-subtitle">Una celebración de amor en Valencia</p>
+
+        <button class="btn btn-gold btn-open-invite" id="btn-open-invite" type="button">
+          <span>Abrir invitación</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+    <div id="main-content" class="main-content hidden">
+      <!-- Navegación premium -->
+      <header class="nav" id="nav">
+        <div class="nav-inner">
+          <a href="#hero" class="nav-brand" id="nav-brand">Z & S</a>
+          <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+          </button>
+          <nav class="nav-menu" id="nav-menu">
+            <a href="#hero" class="nav-link">Inicio</a>
+            <a href="#story" class="nav-link">Historia</a>
+            <a href="#schedule" class="nav-link">Programa</a>
+            <a href="#rsvp" class="nav-link">Confirmar</a>
+            <a href="#location" class="nav-link">Lugar</a>
+            <a href="#songs" class="nav-link">Música</a>
+            <a href="#gifts" class="nav-link">Regalos</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- HERO cinematográfico -->
+      <section id="hero" class="hero">
+        <div class="hero-bg">
+          <div class="hero-gradient"></div>
+          <div class="hero-ornament hero-ornament--left" aria-hidden="true"></div>
+          <div class="hero-ornament hero-ornament--right" aria-hidden="true"></div>
+        </div>
+        <div class="hero-content reveal">
+          <p class="eyebrow">Nos casamos</p>
+          <h1 class="hero-title" id="hero-names">Zaida <em>&</em> Sheila</h1>
+          <div class="hero-divider" aria-hidden="true"><span>✦</span></div>
+          <p class="hero-date" id="hero-date">4 de septiembre de 2027</p>
+          <p class="hero-location">Valencia, España</p>
+
+          <div class="hero-photo-wrap reveal reveal-delay-1">
+            <div class="hero-photo-frame">
+              <img id="couple-photo" src="images/couple.jpg" alt="Zaida y Sheila" class="hero-photo"
+                onerror="this.closest('.hero-photo-frame').classList.add('is-placeholder')" />
+              <div class="photo-placeholder">
+                <span class="placeholder-icon">♥</span>
+                <span>Vuestra foto aquí</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="hero-quote reveal reveal-delay-2">
+            «Dos caminos que se encontraron y decidieron caminar juntas para siempre»
+          </p>
+
+          <div class="hero-actions reveal reveal-delay-3">
+            <a href="#rsvp" class="btn btn-gold">Confirmar asistencia</a>
+            <button class="btn btn-ghost" id="btn-add-calendar" type="button">Añadir al calendario</button>
+          </div>
+        </div>
+
+        <a href="#countdown" class="scroll-hint" aria-label="Desplazarse hacia abajo">
+          <span>Descubre más</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </a>
+      </section>
+
+      <!-- CUENTA ATRÁS -->
+      <section id="countdown" class="section section--dark">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow eyebrow--light">El gran día se acerca</p>
+            <h2 class="section-title section-title--light">Cuenta atrás</h2>
+            <p class="section-desc section-desc--light">para celebrar con <span id="countdown-names">Zaida & Sheila</span></p>
+          </header>
+
+          <div class="countdown reveal" id="countdown-blocks">
+            <div class="countdown-block">
+              <div class="countdown-value" id="days">00</div>
+              <div class="countdown-unit">Días</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-block">
+              <div class="countdown-value" id="hours">00</div>
+              <div class="countdown-unit">Horas</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-block">
+              <div class="countdown-value" id="minutes">00</div>
+              <div class="countdown-unit">Minutos</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-block">
+              <div class="countdown-value" id="seconds">00</div>
+              <div class="countdown-unit">Segundos</div>
+            </div>
+          </div>
+
+          <!-- Tiempo integrado en la misma sección -->
+          <div class="weather-inline reveal" id="weather-card">
+            <div class="weather-loading">Consultando el tiempo en Valencia...</div>
+          </div>
+          <p class="weather-note" id="weather-note"></p>
+        </div>
+      </section>
+
+      <!-- NUESTRA HISTORIA -->
+      <section id="story" class="section">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Nuestra historia</p>
+            <h2 class="section-title">Un amor que crece</h2>
+            <p class="section-desc">Los momentos que nos trajeron hasta aquí</p>
+          </header>
+          <div class="timeline" id="story-timeline"></div>
+        </div>
+      </section>
+
+      <!-- PROGRAMA DEL DÍA -->
+      <section id="schedule" class="section section--alt">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Programa</p>
+            <h2 class="section-title">El día de la boda</h2>
+            <p class="section-desc">Todo lo que tenemos preparado para vosotros</p>
+          </header>
+          <div class="schedule-grid" id="schedule-grid"></div>
+        </div>
+      </section>
+
+      <!-- CÓDIGO DE VESTIMENTA -->
+      <section id="dresscode" class="section dresscode-section">
+        <div class="container">
+          <div class="dresscode-card reveal">
+            <div class="dresscode-icon" aria-hidden="true">👗</div>
+            <header class="section-header section-header--compact">
+              <p class="eyebrow">Dress code</p>
+              <h2 class="section-title" id="dresscode-title">Elegante</h2>
+            </header>
+            <p class="dresscode-desc" id="dresscode-desc"></p>
+            <ul class="dresscode-tips" id="dresscode-tips"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONFIRMAR ASISTENCIA -->
+      <section id="rsvp" class="section section--dark">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow eyebrow--light">RSVP</p>
+            <h2 class="section-title section-title--light">Confirmar asistencia</h2>
+            <p class="section-desc section-desc--light">Vuestra confirmación nos ayuda a organizarlo todo con mimo</p>
+          </header>
+
+          <form class="form-premium reveal" id="rsvp-form">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="rsvp-name">Nombre</label>
+                <input type="text" id="rsvp-name" required placeholder="Tu nombre" maxlength="100" />
+              </div>
+              <div class="form-field">
+                <label for="rsvp-surname">Apellidos</label>
+                <input type="text" id="rsvp-surname" required placeholder="Tus apellidos" maxlength="100" />
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>¿Asistirás a la boda?</label>
+              <div class="chip-group">
+                <label class="chip"><input type="radio" name="attendance" value="si" required /><span>¡Sí, allí estaré!</span></label>
+                <label class="chip"><input type="radio" name="attendance" value="no" /><span>No podré asistir</span></label>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>¿Vienes acompañado/a de tu pareja?</label>
+              <div class="chip-group">
+                <label class="chip"><input type="radio" name="partner" value="si" /><span>Sí, con mi pareja</span></label>
+                <label class="chip"><input type="radio" name="partner" value="no" checked /><span>Iré solo/a</span></label>
+              </div>
+            </div>
+
+            <div class="form-separator"><span>Preferencias alimentarias</span></div>
+
+            <div class="form-field">
+              <label for="diet">Tipo de dieta</label>
+              <select id="diet">
+                <option value="carnivora">Sin restricciones / Carnívora</option>
+                <option value="vegetariana">Vegetariana</option>
+                <option value="vegana">Vegana</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="allergies">Alergias o intolerancias</label>
+              <textarea id="allergies" rows="3" placeholder="Gluten, lactosa, frutos secos..." maxlength="500"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-whatsapp btn-full" id="btn-rsvp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Confirmar por WhatsApp
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- UBICACIÓN -->
+      <section id="location" class="section">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Ubicación</p>
+            <h2 class="section-title">Ceremonia</h2>
+            <p class="section-desc">Os esperamos con los brazos abiertos</p>
+          </header>
+
+          <div class="location-layout reveal">
+            <div class="location-info">
+              <div class="location-detail">
+                <span class="location-label">Dirección</span>
+                <h3 id="venue-address">Calle Literato Azorín 32</h3>
+                <p id="venue-city">Valencia, España</p>
+              </div>
+              <div class="location-detail">
+                <span class="location-label">Hora</span>
+                <p class="location-time" id="venue-time">12:00 h</p>
+              </div>
+              <a href="#" id="maps-link" class="btn btn-gold" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Cómo llegar
+              </a>
+            </div>
+            <div class="location-map">
+              <iframe id="maps-embed" title="Mapa de la ceremonia" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECUERDOS — solo vía QR en mesas (sin enlace directo) -->
+      <section id="memories" class="section section--alt">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Recuerdos</p>
+            <h2 class="section-title">Fotos y vídeos del evento</h2>
+            <p class="section-desc">El día de la boda, cada mesa tendrá un código QR para subir vuestros momentos al instante</p>
+          </header>
+          <div class="memories-info reveal">
+            <div class="memories-info-icon">📱</div>
+            <p>Escanead el QR de vuestra mesa para subir fotos y vídeos. Cada persona solo podrá ver los recuerdos que haya subido.</p>
+            <p class="memories-note">Esta función no está en la invitación: solo funciona con el código QR del evento.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CANCIONES -->
+      <section id="songs" class="section section--dark">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow eyebrow--light">Playlist</p>
+            <h2 class="section-title section-title--light">Sugerir canciones</h2>
+            <p class="section-desc section-desc--light">¿Qué temazo no puede faltar en la pista de baile?</p>
+          </header>
+
+          <div class="songs-layout reveal">
+            <form class="form-premium form-premium--dark" id="songs-form">
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="song-guest">Tu nombre</label>
+                  <input type="text" id="song-guest" placeholder="Tu nombre" maxlength="100" />
+                </div>
+                <div class="form-field">
+                  <label for="song-artist">Artista</label>
+                  <input type="text" id="song-artist" placeholder="Artista" maxlength="200" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="song-title">Canción</label>
+                <input type="text" id="song-title" required placeholder="Nombre de la canción" maxlength="200" />
+              </div>
+              <button type="submit" class="btn btn-gold btn-full">Añadir a la playlist</button>
+              <p class="form-feedback" id="song-status"></p>
+            </form>
+
+            <div class="playlist" id="songs-list">
+              <p class="playlist-empty">Sé el primero en sugerir una canción 🎵</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REGALOS -->
+      <section id="gifts" class="section">
+        <div class="container">
+          <div class="gift-panel reveal">
+            <div class="gift-ornament" aria-hidden="true">✦</div>
+            <header class="section-header section-header--compact">
+              <p class="eyebrow">Regalos</p>
+              <h2 class="section-title">Vuestra presencia es nuestro mayor regalo</h2>
+            </header>
+            <p class="gift-text" id="gift-message"></p>
+            <div class="gift-notice">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              Preferimos detalles en efectivo el día del evento
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MINIJUEGO -->
+      <section id="game" class="section section--alt">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Diversión</p>
+            <h2 class="section-title">Atrapa el ramo</h2>
+            <p class="section-desc">30 segundos para demostrar tus reflejos. ¡Hay premios digitales!</p>
+          </header>
+
+          <div class="game-panel reveal">
+            <div class="game-hud">
+              <div class="hud-item">Puntos <strong id="game-score">0</strong></div>
+              <div class="hud-item">Combo <strong id="game-combo">x1</strong></div>
+              <div class="hud-item">Tiempo <strong id="game-timer">30</strong>s</div>
+            </div>
+
+            <div class="game-arena" id="game-board">
+              <div class="game-intro" id="game-start">
+                <p class="game-intro-title">¿Preparado/a?</p>
+                <input type="text" id="game-player-name" class="game-input" placeholder="Tu nombre" maxlength="50" />
+                <button class="btn btn-gold" id="btn-start-game" type="button">¡Empezar!</button>
+              </div>
+            </div>
+
+            <div class="game-outcome hidden" id="game-result">
+              <h3>¡Partida terminada!</h3>
+              <p class="outcome-score">Puntuación: <strong id="result-score">0</strong></p>
+              <p class="outcome-prize" id="result-prize"></p>
+              <button class="btn btn-ghost-dark" id="btn-play-again" type="button">Jugar otra vez</button>
+            </div>
+
+            <div class="game-ranking">
+              <h3>Ranking de invitados</h3>
+              <ol id="leaderboard-list"></ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="section">
+        <div class="container container--narrow">
+          <header class="section-header reveal">
+            <p class="eyebrow">Preguntas frecuentes</p>
+            <h2 class="section-title">¿Tienes dudas?</h2>
+          </header>
+          <div class="faq-list" id="faq-list"></div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="footer-monogram" id="footer-names">Z & S</div>
+        <p class="footer-date">4 de Septiembre de 2027 · Valencia</p>
+        <p class="footer-hashtag" id="footer-hashtag">#ZaidaYSheila2027</p>
+        <div class="footer-actions">
+          <button class="btn btn-ghost-light btn-sm" id="btn-share" type="button">Compartir invitación</button>
+        </div>
+        <p class="footer-copy">Con amor, Zaida & Sheila</p>
+      </footer>
+
+      <!-- Botón flotante RSVP -->
+      <a href="#rsvp" class="fab-rsvp" id="fab-rsvp" aria-label="Confirmar asistencia">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <span>RSVP</span>
+      </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Galería completa · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/recuerdos.css" />
+  </head>
+  <body class="page-recuerdos">
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <header class="recuerdos-header">
+      <a href="admin.html" class="recuerdos-back">← Mesas y QR</a>
+      <span class="admin-badge">Modo novias</span>
+      <h1>Galería completa</h1>
+      <p class="recuerdos-subtitle">Todos los recuerdos de todas las mesas</p>
+    </header>
+
+    <main class="recuerdos-main container">
+      <div class="gallery-filters" id="gallery-filters">
+        <button class="filter-btn active" data-filter="all" type="button">Todos</button>
+        <button class="filter-btn" data-filter="image" type="button">Fotos</button>
+        <button class="filter-btn" data-filter="video" type="button">Vídeos</button>
+      </div>
+      <div class="gallery-masonry" id="gallery-grid"></div>
+    </main>
+
+    <script src="../js/recuerdos-common.js"></script>
+    <script src="../js/recuerdos-galeria-admin.js"></script>
+  </body>
+</html>

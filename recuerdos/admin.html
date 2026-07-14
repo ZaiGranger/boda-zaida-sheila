@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Admin mesas · Zaida & Sheila</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Josefin+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/recuerdos.css" />
+  </head>
+  <body class="page-recuerdos">
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <header class="recuerdos-header">
+      <a href="../index.html" class="recuerdos-back">← Invitación</a>
+      <p class="eyebrow">Solo novias</p>
+      <h1>Gestión de mesas y QR</h1>
+      <p class="recuerdos-subtitle">Genera un código QR único para cada mesa e imprímelo</p>
+    </header>
+
+    <main class="recuerdos-main container">
+      <!-- Login -->
+      <div class="form-premium" id="login-panel">
+        <div class="form-field">
+          <label for="admin-password">Contraseña</label>
+          <input type="password" id="admin-password" placeholder="Contraseña de administración" />
+        </div>
+        <button class="btn btn-gold btn-full" id="btn-login" type="button">Entrar</button>
+        <p class="form-feedback" id="login-status"></p>
+      </div>
+
+      <!-- Panel admin (oculto hasta login) -->
+      <div class="hidden" id="admin-panel">
+        <div class="admin-actions">
+          <div class="form-premium admin-create">
+            <h3>Crear mesas</h3>
+            <div class="form-field">
+              <label for="mesa-name">Nombre personalizado</label>
+              <input type="text" id="mesa-name" placeholder="Ej: Mesa familia García" maxlength="80" />
+            </div>
+            <button class="btn btn-gold btn-full" id="btn-create-one" type="button">Crear una mesa</button>
+            <div class="form-separator"><span>o</span></div>
+            <div class="form-field">
+              <label for="mesa-count">Crear varias mesas numeradas</label>
+              <input type="number" id="mesa-count" min="1" max="50" value="10" />
+            </div>
+            <button class="btn btn-ghost-dark btn-full" id="btn-create-many" type="button">Crear mesas automáticas</button>
+          </div>
+        </div>
+
+        <h3 class="mesas-list-title">Mesas creadas</h3>
+        <div class="mesas-grid" id="mesas-grid"></div>
+
+        <div class="admin-gallery-link">
+          <a href="galeria-admin.html" class="btn btn-gold btn-full">Ver galería completa (todas las mesas)</a>
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/recuerdos-common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+    <script src="../js/recuerdos-admin.js"></script>
+  </body>
+</html>
