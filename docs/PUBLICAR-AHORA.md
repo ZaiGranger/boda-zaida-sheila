@@ -1,6 +1,34 @@
-# Publicar AHORA — 3 pasos (gratis, sin dominio)
+# Publicar — ESTADO ACTUAL
 
-El proyecto ya está **preparado y commiteado** en git. Solo faltan estos pasos que requieren tu cuenta (no se puede hacer sin iniciar sesión).
+## ✅ HECHO
+
+- **GitHub:** https://github.com/ZaiGranger/boda-zaida-sheila
+- **Código subido** con URL de Render configurada en `js/config.js`
+- **Web funcionando** en internet (túnel temporal Cloudflare)
+
+## ⏳ Falta solo Render (2 clics en el navegador)
+
+Render pide iniciar sesión **en el navegador** (no en terminal). Haz esto:
+
+1. Abre: https://dashboard.render.com/register
+2. Pulsa **GitHub** e inicia sesión con tu cuenta **ZaiGranger**
+3. Autoriza Render
+4. Abre: https://dashboard.render.com/blueprint/new?repo=https://github.com/ZaiGranger/boda-zaida-sheila
+5. Pulsa **Apply** (plan Free)
+6. Añade variable `ADMIN_PASSWORD` = tu contraseña
+
+URL final: **https://boda-zaida-sheila.onrender.com**
+
+---
+
+## Mientras tanto — URL temporal (gratis)
+
+Ejecuta `tunel-publico.bat` y copia la URL `https://....trycloudflare.com` que aparece.
+Funciona mientras el PC esté encendido y la ventana abierta.
+
+---
+
+## Pasos originales (referencia)
 
 ---
 
