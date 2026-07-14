@@ -33,6 +33,7 @@ async function loadPublicConfig() {
   try {
     const data = await (await fetch('/api/public-config')).json();
     if (data.spotifyPlaylistUrl) WEDDING_CONFIG.spotifyPlaylistUrl = data.spotifyPlaylistUrl;
+    if (data.spotifyCollaboratorUrl) WEDDING_CONFIG.spotifyCollaboratorUrl = data.spotifyCollaboratorUrl;
     if (data.spotifyPlaylistTitle) WEDDING_CONFIG.spotifyPlaylistTitle = data.spotifyPlaylistTitle;
   } catch { /* usa valores de config.js */ }
 }
@@ -431,6 +432,7 @@ let lastSearchResults = [];
 
 function initSpotifyEmbed() {
   const url = WEDDING_CONFIG.spotifyPlaylistUrl?.trim();
+  const collabUrl = WEDDING_CONFIG.spotifyCollaboratorUrl?.trim() || url;
   const title = WEDDING_CONFIG.spotifyPlaylistTitle || 'Playlist de la boda';
   const panel = document.getElementById('spotify-playlist-panel');
   const link = document.getElementById('spotify-playlist-link');
@@ -442,10 +444,10 @@ function initSpotifyEmbed() {
   const playlistId = url.match(/playlist\/([a-zA-Z0-9]+)/)?.[1];
   if (!playlistId) return;
 
-  // Panel con enlace directo a Spotify (para añadir canciones en la app)
+  // Panel: enlace de colaboradores para que invitados añadan canciones en Spotify
   panel?.classList.remove('hidden');
   setText('spotify-playlist-title', title);
-  if (link) link.href = url;
+  if (link) link.href = collabUrl;
 
   // Reproductor embebido para escuchar la playlist sin salir de la web
   if (wrap) {

@@ -16,5 +16,7 @@ services:
         sync: false
       - key: SPOTIFY_PLAYLIST_URL
         sync: false
+      - key: SPOTIFY_COLLABORATOR_URL
+        sync: false
       - key: SPOTIFY_PLAYLIST_TITLE
         sync: false

@@ -17,6 +17,8 @@ const WEDDING_CONFIG = {
   // 1. Cread una playlist en Spotify → clic derecho → "Playlist colaborativa"
   // 2. Compartir → Copiar enlace y pegarlo aquí:
   spotifyPlaylistUrl: 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi',
+  // Enlace de colaboradores (para que invitados añadan canciones en Spotify)
+  spotifyCollaboratorUrl: 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi?si=d4718fdffb854174&pt=6eb40f9559c4e803a340e073831b30ec',
   spotifyPlaylistTitle: 'Playlist boda Zaida & Sheila',
 
   venue: {
