@@ -24,7 +24,7 @@ const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ZaidaSheila2027';
 
 // Playlist colaborativa (configurable en Render sin tocar código)
-const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || '';
+const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi';
 const SPOTIFY_PLAYLIST_TITLE = process.env.SPOTIFY_PLAYLIST_TITLE || 'Playlist boda Zaida & Sheila';
 
 [UPLOADS_DIR, DATA_DIR].forEach((dir) => {
