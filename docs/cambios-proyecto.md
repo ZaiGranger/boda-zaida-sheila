@@ -1,6 +1,32 @@
 # Cambios del proyecto
 
-## 2026-07-14 — QR único por mesa + publicación gratis (feature)
+## 2026-07-14 — Playlist Spotify colaborativa + sugerencias manuales (feature)
+
+**Archivos:** `index.html`, `js/main.js`, `js/config.js`, `styles/main.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** Enlace a playlist colaborativa de Spotify + formulario manual siempre visible. Sin necesidad de Premium de desarrollador.
+
+
+**Archivos:** `server/index.js`, `js/main.js`, `js/config.js`, `index.html`, `styles/main.css`, `render.yaml`
+
+**Tipo:** feature
+
+**Qué se cambió:** Búsqueda Spotify para sugerir canciones; paleta floral verde claro con pétalos; sobre con sello, carta desplegable, explosión de pétalos y entrada animada al contenido.
+
+**Configurar Spotify:** Crear app en developer.spotify.com y añadir `SPOTIFY_CLIENT_ID` + `SPOTIFY_CLIENT_SECRET` en Render.
+
+## 2026-07-14 — Tema botánico verde + historia febrero 2020 (enhancement)
+
+**Archivos:** `styles/main.css`, `styles/recuerdos.css`, `js/config.js`, `index.html`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Paleta verde salvia/musgo, hojas flotantes decorativas, botones y timeline en verde, historia corregida (febrero 2020, confinamiento marzo).
+
+**Resultado:** Invitación con estética botánica elegante y texto de historia actualizado.
+
 
 **Archivos:** `recuerdos/`, `js/recuerdos-*.js`, `server/index.js`, `docs/publicar-gratis.md`, `render.yaml`, `index.html`
 

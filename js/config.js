@@ -13,6 +13,12 @@ const WEDDING_CONFIG = {
   // URL pública (Render). Actualizar si cambia el nombre del servicio.
   siteUrl: 'https://boda-zaida-sheila.onrender.com',
 
+  // Playlist colaborativa de Spotify (recomendado, sin Premium de desarrollador).
+  // 1. Cread una playlist en Spotify → clic derecho → "Playlist colaborativa"
+  // 2. Compartir → Copiar enlace y pegarlo aquí:
+  spotifyPlaylistUrl: '',
+  spotifyPlaylistTitle: 'Playlist boda Zaida & Sheila',
+
   venue: {
     name: 'Ceremonia',
     address: 'Calle Literato Azorín 32',
@@ -32,9 +38,9 @@ const WEDDING_CONFIG = {
 
   story: [
     {
-      year: '2020',
-      title: 'Un encuentro en cuarentena',
-      text: 'Nos conocimos en plena cuarentena por la COVID-19. A pesar de la distancia y el confinamiento, surgió algo especial que cambiaría nuestras vidas.',
+      year: 'Febrero 2020',
+      title: 'El primer encuentro',
+      text: 'Nos conocimos en febrero de 2020, justo un mes antes de la cuarentena. Llevábamos poco tiempo conociéndonos cuando, en marzo, nos confinaron… pero el interés entre nosotras permaneció, día tras día, hasta que por fin pudimos volver a vernos.',
     },
     {
       year: '2023',

@@ -10,3 +10,7 @@ services:
         value: "20"
       - key: ADMIN_PASSWORD
         generateValue: true
+      - key: SPOTIFY_CLIENT_ID
+        sync: false
+      - key: SPOTIFY_CLIENT_SECRET
+        sync: false

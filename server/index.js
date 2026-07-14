@@ -200,7 +200,7 @@ app.get('/api/gallery', (req, res) => {
 });
 
 app.post('/api/songs', (req, res) => {
-  const { guestName, song, artist } = req.body;
+  const { guestName, song, artist, spotifyId, albumImage, spotifyUrl, previewUrl } = req.body;
   if (!song?.trim()) return res.status(400).json({ error: 'Canción obligatoria' });
 
   const songs = readJson(SONGS_FILE);
@@ -209,6 +209,10 @@ app.post('/api/songs', (req, res) => {
     guestName: (guestName || 'Anónimo').slice(0, 100),
     song: song.slice(0, 200),
     artist: (artist || '').slice(0, 200),
+    spotifyId: spotifyId || null,
+    albumImage: albumImage || null,
+    spotifyUrl: spotifyUrl || null,
+    previewUrl: previewUrl || null,
     createdAt: new Date().toISOString(),
   });
   writeJson(SONGS_FILE, songs);
@@ -243,6 +247,76 @@ function getPrizeForScore(score) {
   if (score >= 15) return '🌸 ¡Buen ojo!';
   return '💕 ¡Gracias por jugar!';
 }
+
+// --- Spotify (búsqueda de canciones para invitados) ---
+// Requiere SPOTIFY_CLIENT_ID y SPOTIFY_CLIENT_SECRET en variables de entorno.
+// Crear app en https://developer.spotify.com/dashboard
+
+let spotifyToken = null;
+let spotifyTokenExpiry = 0;
+
+async function getSpotifyToken() {
+  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  if (!clientId || !clientSecret) return null;
+
+  if (spotifyToken && Date.now() < spotifyTokenExpiry) return spotifyToken;
+
+  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+  const res = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${credentials}`,
+    },
+    body: 'grant_type=client_credentials',
+  });
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+  spotifyToken = data.access_token;
+  spotifyTokenExpiry = Date.now() + (data.expires_in - 60) * 1000;
+  return spotifyToken;
+}
+
+app.get('/api/spotify/status', (_req, res) => {
+  const configured = !!(process.env.SPOTIFY_CLIENT_ID && process.env.SPOTIFY_CLIENT_SECRET);
+  res.json({ configured });
+});
+
+app.get('/api/spotify/search', async (req, res) => {
+  const q = (req.query.q || '').trim();
+  if (q.length < 2) return res.json([]);
+
+  const token = await getSpotifyToken();
+  if (!token) {
+    return res.status(503).json({
+      error: 'Spotify no configurado. Añade SPOTIFY_CLIENT_ID y SPOTIFY_CLIENT_SECRET en el servidor.',
+    });
+  }
+
+  try {
+    const url = `https://api.spotify.com/v1/search?type=track&limit=8&q=${encodeURIComponent(q)}`;
+    const spotifyRes = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    if (!spotifyRes.ok) return res.status(502).json({ error: 'Error al buscar en Spotify' });
+
+    const data = await spotifyRes.json();
+    const tracks = (data.tracks?.items || []).map((t) => ({
+      id: t.id,
+      name: t.name,
+      artist: t.artists?.map((a) => a.name).join(', ') || '',
+      album: t.album?.name || '',
+      image: t.album?.images?.[2]?.url || t.album?.images?.[0]?.url || '',
+      spotifyUrl: t.external_urls?.spotify || '',
+      previewUrl: t.preview_url || '',
+    }));
+
+    res.json(tracks);
+  } catch {
+    res.status(500).json({ error: 'No se pudo conectar con Spotify' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`💒 Web activa en http://localhost:${PORT}`);

@@ -41,9 +41,14 @@ function applyConfig() {
   const heroNames = document.getElementById('hero-names');
   if (heroNames) heroNames.innerHTML = `${bride1} <em>&</em> ${bride2}`;
 
-  ['envelope-names', 'countdown-names'].forEach((id) => setText(id, namesText));
+  ['envelope-names', 'countdown-names', 'letter-names'].forEach((id) => setText(id, namesText));
 
-  ['envelope-date', 'hero-date'].forEach((id) => setText(id, dateFormatted));
+  const dateShort = new Date(WEDDING_CONFIG.weddingDate).toLocaleDateString('es-ES', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+  }).replace(/\//g, ' · ');
+  setText('envelope-date', dateShort);
+  setText('letter-date', dateShort);
+  setText('hero-date', dateFormatted);
 
   setText('venue-address', venue.address);
   setText('venue-city', `${venue.city}, España`);
@@ -59,6 +64,9 @@ function applyConfig() {
 
   const photo = document.getElementById('couple-photo');
   if (photo) photo.src = couplePhoto;
+
+  // Embed opcional de playlist de Spotify de las novias
+  initSpotifyEmbed();
 }
 
 function formatWeddingDate() {
@@ -73,30 +81,78 @@ function setText(id, text) {
 }
 
 // =============================================================================
-// SOBRE / INVITACIÓN
+// SOBRE / INVITACIÓN — Apertura con efectos florales
 // =============================================================================
 function initEnvelope() {
   const envelope = document.getElementById('envelope');
   const screen = document.getElementById('envelope-screen');
   const main = document.getElementById('main-content');
   const nav = document.getElementById('nav');
+  const waxSeal = document.getElementById('wax-seal');
+  const letterCard = document.getElementById('envelope-letter-card');
+  let isOpening = false;
 
   function openInvitation() {
-    envelope?.classList.add('open');
+    if (isOpening) return;
+    isOpening = true;
+
+    // 1. Romper el sello de cera
+    waxSeal?.classList.add('breaking');
+
+    // 2. Abrir la solapa del sobre
+    setTimeout(() => envelope?.classList.add('open'), 350);
+
+    // 3. La carta sale hacia arriba
+    setTimeout(() => letterCard?.classList.add('out'), 800);
+
+    // 4. Explosión de pétalos + confeti floral
     setTimeout(() => {
-      screen?.classList.add('opening');
-      setTimeout(() => {
-        screen?.classList.add('hidden');
-        main?.classList.remove('hidden');
-        main?.classList.add('visible');
-        nav?.classList.add('visible');
-        fireConfetti();
-      }, 700);
-    }, 900);
+      firePetalBurst();
+      fireFloralConfetti();
+    }, 1100);
+
+    // 5. Pantalla del sobre se desvanece con zoom
+    setTimeout(() => screen?.classList.add('exiting'), 1500);
+
+    // 6. Entrada cinematográfica al contenido principal
+    setTimeout(() => {
+      screen?.classList.add('opening', 'hidden');
+      main?.classList.remove('hidden');
+      main?.classList.add('visible', 'entering');
+      nav?.classList.add('visible');
+      setTimeout(() => main?.classList.remove('entering'), 2000);
+    }, 2300);
   }
 
   document.getElementById('btn-open-invite')?.addEventListener('click', openInvitation);
   envelope?.addEventListener('click', openInvitation);
+}
+
+/** Genera pétalos que explotan desde el centro al abrir el sobre */
+function firePetalBurst() {
+  const container = document.getElementById('envelope-burst');
+  if (!container) return;
+
+  const colors = ['#f0d4dc', '#e8b8c8', '#b8d4bb', '#d8ead9', '#faeef2', '#c5e0c8'];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  for (let i = 0; i < 40; i++) {
+    const petal = document.createElement('span');
+    petal.className = 'burst-petal';
+    petal.style.left = `${cx}px`;
+    petal.style.top = `${cy}px`;
+    petal.style.background = colors[i % colors.length];
+
+    const angle = (Math.PI * 2 * i) / 40 + Math.random() * 0.5;
+    const dist = 80 + Math.random() * 220;
+    petal.style.setProperty('--bx', `${Math.cos(angle) * dist}px`);
+    petal.style.setProperty('--by', `${Math.sin(angle) * dist}px`);
+    petal.style.setProperty('--br', `${Math.random() * 720}deg`);
+
+    container.appendChild(petal);
+    setTimeout(() => petal.remove(), 2000);
+  }
 }
 
 // =============================================================================
@@ -340,39 +396,197 @@ function initRSVP() {
 }
 
 function fireConfetti() {
-  const colors = ['#b8956b', '#c9a0a0', '#d4b896', '#f8f5f0', '#8b7049'];
+  fireFloralConfetti();
+}
+
+/** Confeti en tonos florales (verdes claros y rosas) */
+function fireFloralConfetti() {
+  const colors = ['#b8d4bb', '#d8ead9', '#f0d4dc', '#e8b8c8', '#fafcf8', '#9ec9a6', '#c5e0c8'];
   const end = Date.now() + 2500;
   (function frame() {
-    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.75 }, colors });
-    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.75 }, colors });
+    confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y: 0.75 }, colors });
+    confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1, y: 0.75 }, colors });
     if (Date.now() < end) requestAnimationFrame(frame);
   })();
 }
 
 // =============================================================================
-// CANCIONES
+// CANCIONES + SPOTIFY
 // =============================================================================
-function initSongs() {
+let spotifyConfigured = false;
+let searchTimeout = null;
+let selectedTrack = null;
+let lastSearchResults = [];
+
+function initSpotifyEmbed() {
+  const url = WEDDING_CONFIG.spotifyPlaylistUrl?.trim();
+  const title = WEDDING_CONFIG.spotifyPlaylistTitle || 'Playlist de la boda';
+  const panel = document.getElementById('spotify-playlist-panel');
+  const link = document.getElementById('spotify-playlist-link');
+  const wrap = document.getElementById('spotify-playlist-embed');
+  const divider = document.getElementById('songs-divider');
+
+  if (!url) return;
+
+  const playlistId = url.match(/playlist\/([a-zA-Z0-9]+)/)?.[1];
+  if (!playlistId) return;
+
+  // Panel con enlace directo a Spotify (para añadir canciones en la app)
+  panel?.classList.remove('hidden');
+  setText('spotify-playlist-title', title);
+  if (link) link.href = url;
+
+  // Reproductor embebido para escuchar la playlist sin salir de la web
+  if (wrap) {
+    wrap.classList.remove('hidden');
+    wrap.innerHTML = `<iframe src="https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0" width="100%" height="352" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="${escapeHtml(title)}"></iframe>`;
+  }
+
+  divider?.classList.remove('hidden');
+}
+
+async function initSongs() {
+  const searchField = document.getElementById('spotify-search-field');
+  const divider = document.getElementById('songs-divider');
+
+  // Búsqueda API solo si el servidor tiene claves Spotify (requiere Premium)
+  try {
+    const status = await (await fetch('/api/spotify/status')).json();
+    spotifyConfigured = status.configured;
+  } catch {
+    spotifyConfigured = false;
+  }
+
+  if (spotifyConfigured) {
+    searchField?.classList.remove('hidden');
+    const searchInput = document.getElementById('song-search');
+    searchInput?.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      const q = searchInput.value.trim();
+      if (q.length < 2) { hideSearchResults(); return; }
+      searchTimeout = setTimeout(() => searchSpotify(q), 350);
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#spotify-search-field')) hideSearchResults();
+    });
+    document.getElementById('song-clear')?.addEventListener('click', clearSelectedTrack);
+  }
+
+  // Si no hay playlist de Spotify, ocultar el divisor "o escríbela aquí"
+  if (!WEDDING_CONFIG.spotifyPlaylistUrl?.trim()) {
+    divider?.classList.add('hidden');
+  }
+
   document.getElementById('songs-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const status = document.getElementById('song-status');
+
+    let song, artist, spotifyId, albumImage, spotifyUrl, previewUrl;
+
+    // Prioridad: canción escrita a mano (siempre disponible)
+    song = document.getElementById('song-title-manual')?.value.trim();
+    artist = document.getElementById('song-artist-manual')?.value.trim();
+
+    // Si usó búsqueda API y no escribió manual, usar la pista seleccionada
+    if (!song && spotifyConfigured && selectedTrack) {
+      ({ name: song, artist, id: spotifyId, image: albumImage, spotifyUrl, previewUrl } = selectedTrack);
+    }
+
+    if (!song) {
+      showStatus(status, 'Escribe el nombre de la canción', 'error');
+      return;
+    }
+
     try {
       const res = await fetch('/api/songs', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           guestName: document.getElementById('song-guest')?.value.trim(),
-          artist: document.getElementById('song-artist')?.value.trim(),
-          song: document.getElementById('song-title')?.value.trim(),
+          song, artist, spotifyId, albumImage, spotifyUrl, previewUrl,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-      showStatus(status, 'Canción añadida a la playlist', 'success');
+      showStatus(status, '¡Sugerencia guardada! Gracias 🎵', 'success');
+      const guestName = document.getElementById('song-guest')?.value.trim();
       e.target.reset();
+      clearSelectedTrack();
+      if (guestName) {
+        const guestInput = document.getElementById('song-guest');
+        if (guestInput) guestInput.value = guestName;
+      }
       loadSongs();
     } catch (err) { showStatus(status, err.message, 'error'); }
   });
+
   loadSongs();
+}
+
+async function searchSpotify(query) {
+  const resultsEl = document.getElementById('song-search-results');
+  if (!resultsEl) return;
+
+  try {
+    const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error de búsqueda');
+
+    if (!data.length) {
+      resultsEl.innerHTML = '<p class="playlist-empty" style="padding:1rem">No se encontraron canciones</p>';
+      resultsEl.classList.remove('hidden');
+      return;
+    }
+
+    lastSearchResults = data;
+
+    resultsEl.innerHTML = data.map((t, idx) => `
+      <div class="spotify-result" data-idx="${idx}">
+        <img src="${escapeHtml(t.image || '')}" alt="" onerror="this.style.display='none'" />
+        <div class="spotify-result-info">
+          <strong>${escapeHtml(t.name)}</strong>
+          <span>${escapeHtml(t.artist)}</span>
+        </div>
+      </div>`).join('');
+
+    resultsEl.querySelectorAll('.spotify-result').forEach((el) => {
+      el.addEventListener('click', () => {
+        const track = lastSearchResults[Number(el.dataset.idx)];
+        if (track) selectTrack(track);
+        hideSearchResults();
+        const search = document.getElementById('song-search');
+        if (search) search.value = '';
+      });
+    });
+
+    resultsEl.classList.remove('hidden');
+  } catch (err) {
+    resultsEl.innerHTML = `<p class="playlist-empty" style="padding:1rem">${escapeHtml(err.message)}</p>`;
+    resultsEl.classList.remove('hidden');
+  }
+}
+
+function selectTrack(track) {
+  selectedTrack = track;
+  document.getElementById('song-title-manual').value = track.name || '';
+  document.getElementById('song-artist-manual').value = track.artist || '';
+  document.getElementById('song-title').value = track.name || '';
+  document.getElementById('song-artist').value = track.artist || '';
+  document.getElementById('song-spotify-id').value = track.id || '';
+  document.getElementById('song-album-image').value = track.image || '';
+  document.getElementById('song-spotify-url').value = track.spotifyUrl || '';
+  document.getElementById('song-preview-url').value = track.previewUrl || '';
+}
+
+function clearSelectedTrack() {
+  selectedTrack = null;
+  ['song-title', 'song-artist', 'song-spotify-id', 'song-album-image', 'song-spotify-url', 'song-preview-url']
+    .forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const search = document.getElementById('song-search');
+  if (search) search.value = '';
+}
+
+function hideSearchResults() {
+  document.getElementById('song-search-results')?.classList.add('hidden');
 }
 
 async function loadSongs() {
@@ -380,15 +594,29 @@ async function loadSongs() {
   if (!list) return;
   try {
     const songs = await (await fetch('/api/songs')).json();
-    if (!songs.length) { list.innerHTML = '<p class="playlist-empty">Sé el primero en sugerir una canción</p>'; return; }
-    list.innerHTML = songs.slice(0, 25).map((s, i) => `
+    if (!songs.length) {
+      list.innerHTML = '<p class="playlist-header">Sugerencias en la web</p><p class="playlist-empty">Sé el primero en sugerir una canción 🎵</p>';
+      return;
+    }
+    list.innerHTML = `<p class="playlist-header">Sugerencias en la web</p>` + songs.slice(0, 30).map((s, i) => {
+      const cover = s.albumImage
+        ? `<img class="song-cover" src="${escapeHtml(s.albumImage)}" alt="" />`
+        : `<span class="song-cover song-cover--placeholder">🎵</span>`;
+      const link = s.spotifyUrl
+        ? `<a class="song-spotify-link" href="${escapeHtml(s.spotifyUrl)}" target="_blank" rel="noopener" aria-label="Abrir en Spotify">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02z"/></svg>
+          </a>` : '';
+      return `
       <div class="song-item">
+        ${cover}
         <span class="song-number">${String(i + 1).padStart(2, '0')}</span>
         <div class="song-info">
           <strong>${escapeHtml(s.song)}</strong>
           <span>${escapeHtml(s.artist || 'Artista desconocido')} · ${escapeHtml(s.guestName)}</span>
         </div>
-      </div>`).join('');
+        ${link}
+      </div>`;
+    }).join('');
   } catch { /* silencioso */ }
 }
 
