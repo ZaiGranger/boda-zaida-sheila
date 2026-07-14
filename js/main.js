@@ -378,8 +378,9 @@ function getWeddingEventEnd() {
   return { start, end };
 }
 
-function fmtIcsDate(d) {
-  return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+function fmtIcsDateLocal(d) {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
 }
 
 function fmtGoogleDate(d) {
@@ -392,8 +393,8 @@ function downloadIcsCalendar(start, end) {
   const ics = [
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Boda Zaida Sheila//ES', 'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
-    `DTSTART:${fmtIcsDate(start)}`,
-    `DTEND:${fmtIcsDate(end)}`,
+    `DTSTART:${fmtIcsDateLocal(start)}`,
+    `DTEND:${fmtIcsDateLocal(end)}`,
     `SUMMARY:Boda ${bride1} & ${bride2}`,
     `LOCATION:${venue.fullAddress}`,
     `DESCRIPTION:Ceremonia y celebración de la boda de ${bride1} y ${bride2}.`,
