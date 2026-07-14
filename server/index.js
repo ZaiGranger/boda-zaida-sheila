@@ -44,6 +44,17 @@ app.use(express.json());
 app.use('/uploads', express.static(UPLOADS_DIR));
 app.use(express.static(ROOT_DIR));
 
+// Datos de la boda (para generar .ics sin descarga en iPhone)
+const WEDDING_ICS = {
+  bride1: 'Zaida',
+  bride2: 'Sheila',
+  start: '20270904T120000',
+  end: '20270905T010000',
+  location: 'Calle Literato Azorín 32, Valencia, España',
+  summary: 'Boda Zaida & Sheila',
+  description: 'Ceremonia y celebración de la boda de Zaida y Sheila.',
+};
+
 // Config pública (playlist Spotify desde variables de entorno en Render)
 app.get('/api/public-config', (_req, res) => {
   res.json({
@@ -51,6 +62,32 @@ app.get('/api/public-config', (_req, res) => {
     spotifyCollaboratorUrl: SPOTIFY_COLLABORATOR_URL,
     spotifyPlaylistTitle: SPOTIFY_PLAYLIST_TITLE,
   });
+});
+
+// Calendario iPhone: al abrir esta URL, Safari muestra "Añadir al calendario" (sin descargar archivo)
+app.get('/boda.ics', (_req, res) => {
+  const { summary, description, location, start, end } = WEDDING_ICS;
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Boda Zaida Sheila//ES',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:boda-zaida-sheila-2027@boda-zaida-sheila.onrender.com`,
+    `DTSTAMP:${start}`,
+    `DTSTART:${start}`,
+    `DTEND:${end}`,
+    `SUMMARY:${summary}`,
+    `DESCRIPTION:${description}`,
+    `LOCATION:${location}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+
+  res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
+  res.setHeader('Content-Disposition', 'inline; filename="boda-zaida-sheila.ics"');
+  res.send(ics);
 });
 
 const upload = multer({

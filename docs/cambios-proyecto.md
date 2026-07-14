@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — Calendario móvil sin descargar archivo (bug fix)
+
+**Archivos:** `js/main.js`, `server/index.js`
+
+**Tipo:** bug fix
+
+**Qué se cambió:** iPhone abre Calendario Apple vía `/boda.ics`; Android abre Google Calendar con intent nativo. Sin descarga de ficheros.
+
 ## 2026-07-14 — WhatsApp Zaida/Sheila y calendario iPhone/Android (feature)
 
 **Archivos:** `js/config.js`, `js/main.js`, `index.html`, `styles/main.css`

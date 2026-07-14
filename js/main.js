@@ -378,37 +378,14 @@ function getWeddingEventEnd() {
   return { start, end };
 }
 
-function fmtIcsDateLocal(d) {
-  const p = (n) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
-}
-
 function fmtGoogleDate(d) {
   const p = (n) => String(n).padStart(2, '0');
   return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
 }
 
-function downloadIcsCalendar(start, end) {
-  const { venue, bride1, bride2 } = WEDDING_CONFIG;
-  const ics = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Boda Zaida Sheila//ES', 'CALSCALE:GREGORIAN',
-    'BEGIN:VEVENT',
-    `DTSTART:${fmtIcsDateLocal(start)}`,
-    `DTEND:${fmtIcsDateLocal(end)}`,
-    `SUMMARY:Boda ${bride1} & ${bride2}`,
-    `LOCATION:${venue.fullAddress}`,
-    `DESCRIPTION:Ceremonia y celebración de la boda de ${bride1} y ${bride2}.`,
-    'END:VEVENT', 'END:VCALENDAR',
-  ].join('\r\n');
-
-  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'boda-zaida-sheila.ics';
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(link.href);
+function openAppleCalendar() {
+  // Navegar al .ics del servidor: en iPhone abre directamente Calendario de Apple
+  window.location.href = `${window.location.origin}/boda.ics`;
 }
 
 function openGoogleCalendar(start, end) {
@@ -420,19 +397,26 @@ function openGoogleCalendar(start, end) {
     details: `Ceremonia y celebración de la boda de ${bride1} y ${bride2}.`,
     location: venue.fullAddress,
   });
-  window.open(`https://calendar.google.com/calendar/render?${params}`, '_blank', 'noopener,noreferrer');
+  const url = `https://calendar.google.com/calendar/render?${params}`;
+
+  // En Android, intent:// abre la app de Google Calendar si está instalada
+  if (isAndroidDevice()) {
+    const fallback = encodeURIComponent(url);
+    window.location.href = `intent://calendar.google.com/calendar/render?${params}#Intent;scheme=https;package=com.google.android.calendar;S.browser_fallback_url=${fallback};end`;
+    return;
+  }
+
+  window.location.href = url;
 }
 
 function openWeddingCalendar() {
   const { start, end } = getWeddingEventEnd();
 
-  if (isAndroidDevice()) {
+  if (isIOSDevice()) {
+    openAppleCalendar();
+  } else if (isAndroidDevice()) {
     openGoogleCalendar(start, end);
-  } else if (isIOSDevice()) {
-    // iPhone/iPad: archivo .ics → se abre en Calendario de Apple
-    downloadIcsCalendar(start, end);
   } else {
-    // Escritorio u otros: Google Calendar (también funciona en muchos Android)
     openGoogleCalendar(start, end);
   }
 }
