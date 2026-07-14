@@ -354,58 +354,138 @@ function initShare() {
 }
 
 function initAddToCalendar() {
-  document.getElementById('btn-add-calendar')?.addEventListener('click', () => {
-    const start = new Date(WEDDING_CONFIG.weddingDate);
-    const end = new Date(start.getTime() + 8 * 3600000); // 8 horas de evento
+  document.getElementById('btn-add-calendar')?.addEventListener('click', openWeddingCalendar);
+}
 
-    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    const { venue, bride1, bride2 } = WEDDING_CONFIG;
+/** Detecta iPhone/iPad vs Android para abrir el calendario nativo de cada móvil */
+function isIOSDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
 
-    const ics = [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
-      `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
-      `SUMMARY:Boda ${bride1} & ${bride2}`,
-      `LOCATION:${venue.fullAddress}`,
-      `DESCRIPTION:Ceremonia de boda de ${bride1} y ${bride2}`,
-      'END:VEVENT', 'END:VCALENDAR',
-    ].join('\r\n');
+function isAndroidDevice() {
+  return /Android/i.test(navigator.userAgent);
+}
 
-    const blob = new Blob([ics], { type: 'text/calendar' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'boda-zaida-sheila.ics';
-    link.click();
+/** Fecha fin del evento: día de la boda a la hora de cierre (01:00 del día siguiente) */
+function getWeddingEventEnd() {
+  const start = new Date(WEDDING_CONFIG.weddingDate);
+  const end = new Date(start);
+  const [endHour, endMinute] = (WEDDING_CONFIG.eventEnd || '01:00').split(':').map(Number);
+  // Si cierra a la 01:00, es la madrugada del día siguiente
+  if (endHour < 12) end.setDate(end.getDate() + 1);
+  end.setHours(endHour, endMinute || 0, 0, 0);
+  return { start, end };
+}
+
+function fmtIcsDate(d) {
+  return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}
+
+function fmtGoogleDate(d) {
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`;
+}
+
+function downloadIcsCalendar(start, end) {
+  const { venue, bride1, bride2 } = WEDDING_CONFIG;
+  const ics = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Boda Zaida Sheila//ES', 'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT',
+    `DTSTART:${fmtIcsDate(start)}`,
+    `DTEND:${fmtIcsDate(end)}`,
+    `SUMMARY:Boda ${bride1} & ${bride2}`,
+    `LOCATION:${venue.fullAddress}`,
+    `DESCRIPTION:Ceremonia y celebración de la boda de ${bride1} y ${bride2}.`,
+    'END:VEVENT', 'END:VCALENDAR',
+  ].join('\r\n');
+
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'boda-zaida-sheila.ics';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+}
+
+function openGoogleCalendar(start, end) {
+  const { venue, bride1, bride2 } = WEDDING_CONFIG;
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: `Boda ${bride1} & ${bride2}`,
+    dates: `${fmtGoogleDate(start)}/${fmtGoogleDate(end)}`,
+    details: `Ceremonia y celebración de la boda de ${bride1} y ${bride2}.`,
+    location: venue.fullAddress,
   });
+  window.open(`https://calendar.google.com/calendar/render?${params}`, '_blank', 'noopener,noreferrer');
+}
+
+function openWeddingCalendar() {
+  const { start, end } = getWeddingEventEnd();
+
+  if (isAndroidDevice()) {
+    openGoogleCalendar(start, end);
+  } else if (isIOSDevice()) {
+    // iPhone/iPad: archivo .ics → se abre en Calendario de Apple
+    downloadIcsCalendar(start, end);
+  } else {
+    // Escritorio u otros: Google Calendar (también funciona en muchos Android)
+    openGoogleCalendar(start, end);
+  }
 }
 
 // =============================================================================
-// RSVP
+// RSVP — WhatsApp a Zaida o Sheila
 // =============================================================================
+function buildRsvpMessage(form) {
+  const name = document.getElementById('rsvp-name')?.value.trim();
+  const surname = document.getElementById('rsvp-surname')?.value.trim();
+  const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
+  const partner = form.querySelector('input[name="partner"]:checked')?.value;
+  const diet = document.getElementById('diet')?.value;
+  const allergies = document.getElementById('allergies')?.value.trim();
+
+  const dietLabels = { carnivora: 'Sin restricciones', vegetariana: 'Vegetariana', vegana: 'Vegana' };
+  const attendanceText = attendance === 'si' ? '✅ Sí, asistiré' : '❌ No podré asistir';
+
+  return [
+    `💒 *Confirmación — Boda ${WEDDING_CONFIG.bride1} & ${WEDDING_CONFIG.bride2}*`, '',
+    `👤 *Nombre:* ${name} ${surname}`,
+    `📋 *Asistencia:* ${attendanceText}`,
+    `💑 *¿Con pareja?* ${partner === 'si' ? 'Sí' : 'No'}`,
+    `🍽️ *Dieta:* ${dietLabels[diet]}`,
+    allergies ? `⚠️ *Alergias:* ${allergies}` : '', '', '¡Gracias!',
+  ].filter(Boolean).join('\n');
+}
+
+function openWhatsAppRsvp(contactIndex) {
+  const form = document.getElementById('rsvp-form');
+  if (!form?.reportValidity()) return;
+
+  const contacts = WEDDING_CONFIG.whatsappContacts;
+  const contact = contacts?.[contactIndex];
+  if (!contact?.number) return;
+
+  const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
+  const message = buildRsvpMessage(form);
+
+  if (attendance === 'si') { fireConfetti(); setTimeout(fireConfetti, 400); }
+
+  const url = `https://wa.me/${contact.number}?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
 function initRSVP() {
-  document.getElementById('rsvp-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = document.getElementById('rsvp-name')?.value.trim();
-    const surname = document.getElementById('rsvp-surname')?.value.trim();
-    const attendance = form.querySelector('input[name="attendance"]:checked')?.value;
-    const partner = form.querySelector('input[name="partner"]:checked')?.value;
-    const diet = document.getElementById('diet')?.value;
-    const allergies = document.getElementById('allergies')?.value.trim();
+  const form = document.getElementById('rsvp-form');
+  form?.addEventListener('submit', (e) => e.preventDefault());
 
-    const dietLabels = { carnivora: 'Sin restricciones', vegetariana: 'Vegetariana', vegana: 'Vegana' };
-    const attendanceText = attendance === 'si' ? '✅ Sí, asistiré' : '❌ No podré asistir';
-
-    const message = [
-      `💒 *Confirmación — Boda ${WEDDING_CONFIG.bride1} & ${WEDDING_CONFIG.bride2}*`, '',
-      `👤 *Nombre:* ${name} ${surname}`,
-      `📋 *Asistencia:* ${attendanceText}`,
-      `💑 *¿Con pareja?* ${partner === 'si' ? 'Sí' : 'No'}`,
-      `🍽️ *Dieta:* ${dietLabels[diet]}`,
-      allergies ? `⚠️ *Alergias:* ${allergies}` : '', '', '¡Gracias!',
-    ].filter(Boolean).join('\n');
-
-    if (attendance === 'si') { fireConfetti(); setTimeout(fireConfetti, 400); }
-    window.open(`https://wa.me/${WEDDING_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  document.querySelectorAll('.btn-whatsapp-contact').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.contact);
+      openWhatsAppRsvp(idx);
+    });
   });
 }
 

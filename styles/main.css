@@ -756,6 +756,24 @@ button { font-family: inherit; cursor: pointer; }
 
 .chip-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .chip { cursor: pointer; }
+
+/* RSVP — dos botones WhatsApp (Zaida / Sheila) */
+.rsvp-whatsapp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.rsvp-whatsapp-actions .btn { width: 100%; }
+.form-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.65rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+@media (max-width: 480px) {
+  .rsvp-whatsapp-actions { grid-template-columns: 1fr; }
+}
 .chip input { display: none; }
 .chip span {
   display: block; padding: 0.65rem 1.25rem;

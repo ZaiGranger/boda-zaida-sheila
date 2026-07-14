@@ -32,7 +32,11 @@ const WEDDING_CONFIG = {
     lon: -0.3763,
   },
 
-  whatsappNumber: '34600000000',
+  // WhatsApp para confirmar asistencia (prefijo España 34)
+  whatsappContacts: [
+    { name: 'Zaida', number: '34605826729' },
+    { name: 'Sheila', number: '34652737073' },
+  ],
   couplePhoto: 'images/couple.jpg',
 
   giftMessage:

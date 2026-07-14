@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — WhatsApp Zaida/Sheila y calendario iPhone/Android (feature)
+
+**Archivos:** `js/config.js`, `js/main.js`, `index.html`, `styles/main.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** RSVP abre WhatsApp a Zaida (605826729) o Sheila (652737073); calendario detecta iPhone (Apple) o Android (Google).
+
 ## 2026-07-14 — Fix enlace Spotify caducado (bug fix)
 
 **Archivos:** `js/main.js`, `js/config.js`, `server/index.js`, `index.html`
