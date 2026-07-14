@@ -1,7 +1,5 @@
 # Despliegue en Render al hacer push a main
-# Opción A (recomendada): activar Auto-Deploy en Render conectado a GitHub
-# Opción B: configurar secret RENDER_DEPLOY_HOOK en GitHub
-#   → Render Dashboard → servicio → Settings → Deploy Hook → copiar URL
+# Secret requerido: RENDER_DEPLOY_HOOK (URL del Deploy Hook de Render)
 
 name: Deploy to Render
 
@@ -15,11 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Render deploy hook
-        if: ${{ secrets.RENDER_DEPLOY_HOOK != '' }}
         run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
-
-      - name: Aviso si falta el deploy hook
-        if: ${{ secrets.RENDER_DEPLOY_HOOK == '' }}
-        run: |
-          echo "::warning::RENDER_DEPLOY_HOOK no configurado en GitHub Secrets."
-          echo "Activa Auto-Deploy en Render o añade el Deploy Hook del servicio."
