@@ -53,7 +53,10 @@ function applyConfig() {
   const heroNames = document.getElementById('hero-names');
   if (heroNames) heroNames.innerHTML = `${bride1} <em>&</em> ${bride2}`;
 
-  ['envelope-names', 'countdown-names', 'letter-names'].forEach((id) => setText(id, namesText));
+  const envelopeNames = document.getElementById('envelope-names');
+  if (envelopeNames) envelopeNames.innerHTML = `${bride1} <span>&</span> ${bride2}`;
+
+  ['countdown-names', 'letter-names'].forEach((id) => setText(id, namesText));
 
   const dateShort = new Date(WEDDING_CONFIG.weddingDate).toLocaleDateString('es-ES', {
     day: '2-digit', month: '2-digit', year: 'numeric',
@@ -96,48 +99,46 @@ function setText(id, text) {
 // SOBRE / INVITACIÓN — Apertura con efectos florales
 // =============================================================================
 function initEnvelope() {
-  const envelope = document.getElementById('envelope');
   const screen = document.getElementById('envelope-screen');
   const main = document.getElementById('main-content');
   const nav = document.getElementById('nav');
   const waxSeal = document.getElementById('wax-seal');
-  const letterCard = document.getElementById('envelope-letter-card');
   let isOpening = false;
 
   function openInvitation() {
     if (isOpening) return;
     isOpening = true;
 
-    // 1. Romper el sello de cera
+    // 1. Romper el sello de cera rojo
     waxSeal?.classList.add('breaking');
+    screen?.classList.add('is-opening');
 
-    // 2. Abrir la solapa del sobre
-    setTimeout(() => envelope?.classList.add('open'), 350);
+    // 2. Las solapas del sobre se abren
+    setTimeout(() => {
+      document.getElementById('env-flap-top')?.classList.add('open');
+      document.getElementById('env-flap-bottom')?.classList.add('open');
+    }, 300);
 
-    // 3. La carta sale hacia arriba
-    setTimeout(() => letterCard?.classList.add('out'), 800);
-
-    // 4. Explosión de pétalos + confeti floral
+    // 3. Destellos dorados + confeti suave
     setTimeout(() => {
       firePetalBurst();
       fireFloralConfetti();
-    }, 1100);
+    }, 900);
 
-    // 5. Pantalla del sobre se desvanece con zoom
-    setTimeout(() => screen?.classList.add('exiting'), 1500);
+    // 4. El papel del sobre se desvanece
+    setTimeout(() => screen?.classList.add('exiting'), 1200);
 
-    // 6. Entrada cinematográfica al contenido principal
+    // 5. La invitación se despliega como papel
     setTimeout(() => {
       screen?.classList.add('opening', 'hidden');
       main?.classList.remove('hidden');
       main?.classList.add('visible', 'entering');
       nav?.classList.add('visible');
       setTimeout(() => main?.classList.remove('entering'), 2000);
-    }, 2300);
+    }, 2000);
   }
 
   document.getElementById('btn-open-invite')?.addEventListener('click', openInvitation);
-  envelope?.addEventListener('click', openInvitation);
 }
 
 /** Genera pétalos que explotan desde el centro al abrir el sobre */
@@ -145,7 +146,7 @@ function firePetalBurst() {
   const container = document.getElementById('envelope-burst');
   if (!container) return;
 
-  const colors = ['#f0d4dc', '#e8b8c8', '#b8d4bb', '#d8ead9', '#faeef2', '#c5e0c8'];
+  const colors = ['#b8a07a', '#d4c4a0', '#8aab9a', '#f5f0e8', '#c45c4a', '#ebe4d8'];
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
 
@@ -413,7 +414,7 @@ function fireConfetti() {
 
 /** Confeti en tonos florales (verdes claros y rosas) */
 function fireFloralConfetti() {
-  const colors = ['#b8d4bb', '#d8ead9', '#f0d4dc', '#e8b8c8', '#fafcf8', '#9ec9a6', '#c5e0c8'];
+  const colors = ['#b8a07a', '#8aab9a', '#f5f0e8', '#d4c4a0', '#ebe4d8', '#c45c4a'];
   const end = Date.now() + 2500;
   (function frame() {
     confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y: 0.75 }, colors });

@@ -11,83 +11,70 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/watercolor.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>" />
   </head>
   <body>
     <!-- Textura de grano sutil para aspecto premium -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Decoración botánica: hojas y pétalos flotantes -->
-    <div class="botanical-bg" aria-hidden="true">
-      <span class="floating-leaf floating-leaf--1"></span>
-      <span class="floating-leaf floating-leaf--2"></span>
-      <span class="floating-leaf floating-leaf--3"></span>
-      <span class="floating-leaf floating-leaf--4"></span>
-      <span class="floating-leaf floating-leaf--5"></span>
-      <span class="floating-leaf floating-leaf--6"></span>
-      <span class="floating-petal floating-petal--1"></span>
-      <span class="floating-petal floating-petal--2"></span>
-      <span class="floating-petal floating-petal--3"></span>
-      <span class="floating-petal floating-petal--4"></span>
-      <span class="floating-flower floating-flower--1"></span>
-      <span class="floating-flower floating-flower--2"></span>
-    </div>
+    <!-- Decoración acuarela sutil -->
+    <div class="botanical-bg hidden" aria-hidden="true"></div>
 
     <!-- Barra de progreso de lectura -->
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-    <!-- ==================== PANTALLA DE INVITACIÓN (SOBRE) ==================== -->
-    <div id="envelope-screen" class="envelope-screen">
-      <!-- Pétalos ambientales en la pantalla de apertura -->
-      <div class="envelope-floral-bg" aria-hidden="true">
-        <span class="env-petal env-petal--1"></span>
-        <span class="env-petal env-petal--2"></span>
-        <span class="env-petal env-petal--3"></span>
-        <span class="env-petal env-petal--4"></span>
-        <span class="env-petal env-petal--5"></span>
-        <span class="env-petal env-petal--6"></span>
-        <span class="env-leaf env-leaf--1"></span>
-        <span class="env-leaf env-leaf--2"></span>
-      </div>
-      <div class="envelope-particles" aria-hidden="true"></div>
+    <!-- ==================== SOBRE ACUARELA ==================== -->
+    <div id="envelope-screen" class="envelope-screen envelope-screen--paper">
       <div id="envelope-burst" class="envelope-burst" aria-hidden="true"></div>
 
-      <div class="envelope-container">
-        <div class="wax-seal" id="wax-seal" aria-hidden="true">
-          <span class="seal-monogram" id="seal-monogram">Z&S</span>
-        </div>
+      <!-- Flores line-art en esquinas (estilo referencia) -->
+      <svg class="env-corner env-corner--tl" viewBox="0 0 120 120" aria-hidden="true">
+        <path d="M10 110 Q40 80 60 50 Q80 25 110 10" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <ellipse cx="55" cy="48" rx="8" ry="14" fill="none" stroke="currentColor" stroke-width="0.7" transform="rotate(-30 55 48)"/>
+        <ellipse cx="72" cy="32" rx="6" ry="11" fill="none" stroke="currentColor" stroke-width="0.7" transform="rotate(15 72 32)"/>
+      </svg>
+      <svg class="env-corner env-corner--br" viewBox="0 0 120 120" aria-hidden="true">
+        <path d="M10 10 Q40 40 60 70 Q80 95 110 110" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <ellipse cx="55" cy="72" rx="8" ry="14" fill="none" stroke="currentColor" stroke-width="0.7" transform="rotate(30 55 72)"/>
+        <ellipse cx="38" cy="88" rx="6" ry="11" fill="none" stroke="currentColor" stroke-width="0.7" transform="rotate(-15 38 88)"/>
+      </svg>
 
-        <div class="envelope" id="envelope">
-          <div class="envelope-shadow" aria-hidden="true"></div>
-          <div class="envelope-back" aria-hidden="true"></div>
-          <div class="envelope-letter-card" id="envelope-letter-card">
-            <p class="letter-eyebrow">Estáis invitados</p>
-            <p class="letter-names" id="letter-names">Zaida & Sheila</p>
-            <p class="letter-date" id="letter-date">04 · 09 · 2027</p>
-            <p class="letter-floral" aria-hidden="true">🌸 🌿</p>
+      <div class="envelope-paper">
+        <!-- Solapas del sobre (se abren al pulsar) -->
+        <div class="env-flap env-flap--top" id="env-flap-top" aria-hidden="true"></div>
+        <div class="env-flap env-flap--bottom" id="env-flap-bottom" aria-hidden="true"></div>
+        <div class="env-fold-line env-fold-line--left" aria-hidden="true"></div>
+        <div class="env-fold-line env-fold-line--right" aria-hidden="true"></div>
+
+        <div class="envelope-container">
+          <p class="envelope-family envelope-reveal">Zaida & Sheila</p>
+          <h1 class="envelope-names envelope-reveal" id="envelope-names">Zaida <span>&</span> Sheila</h1>
+          <p class="envelope-invite envelope-reveal">Os invitamos a celebrar con nosotras este gran día</p>
+          <p class="envelope-date envelope-reveal" id="envelope-date">04 · 09 · 2027</p>
+
+          <div class="wax-seal" id="wax-seal" aria-hidden="true">
+            <span class="seal-monogram" id="seal-monogram">Z&S</span>
           </div>
-          <div class="envelope-body">
-            <div class="envelope-body-inner"></div>
-          </div>
-          <div class="envelope-flap"></div>
+
+          <button class="btn btn-envelope envelope-reveal" id="btn-open-invite" type="button">
+            Ver invitación
+          </button>
         </div>
+      </div>
 
-        <p class="envelope-pretitle envelope-reveal">La boda de</p>
-        <h1 class="envelope-names envelope-reveal" id="envelope-names">Zaida & Sheila</h1>
-        <p class="envelope-date envelope-reveal" id="envelope-date">04 · 09 · 2027</p>
-        <p class="envelope-subtitle envelope-reveal">Una celebración de amor en Valencia</p>
-
-        <button class="btn btn-gold btn-open-invite envelope-reveal" id="btn-open-invite" type="button">
-          <span>Abrir invitación</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
+      <!-- Sobre 3D (animación al abrir) -->
+      <div class="envelope envelope--hidden" id="envelope" aria-hidden="true">
+        <div class="envelope-letter-card" id="envelope-letter-card">
+          <p class="letter-eyebrow">Estáis invitados</p>
+          <p class="letter-names" id="letter-names">Zaida & Sheila</p>
+          <p class="letter-date" id="letter-date">04 · 09 · 2027</p>
+        </div>
       </div>
     </div>
 
@@ -103,7 +90,7 @@
           <nav class="nav-menu" id="nav-menu">
             <a href="#hero" class="nav-link">Inicio</a>
             <a href="#story" class="nav-link">Historia</a>
-            <a href="#schedule" class="nav-link">Programa</a>
+            <a href="#schedule" class="nav-link">Minuto a minuto</a>
             <a href="#rsvp" class="nav-link">Confirmar</a>
             <a href="#location" class="nav-link">Lugar</a>
             <a href="#songs" class="nav-link">Música</a>
@@ -113,20 +100,14 @@
         </div>
       </header>
 
-      <!-- HERO cinematográfico -->
-      <section id="hero" class="hero">
+      <!-- HERO acuarela -->
+      <section id="hero" class="hero hero--watercolor">
         <div class="hero-bg">
-          <div class="hero-gradient"></div>
-          <div class="hero-leaves" aria-hidden="true">
-            <span class="hero-leaf hero-leaf--tl"></span>
-            <span class="hero-leaf hero-leaf--br"></span>
-          </div>
-          <div class="hero-ornament hero-ornament--left" aria-hidden="true"></div>
-          <div class="hero-ornament hero-ornament--right" aria-hidden="true"></div>
+          <img src="images/watercolor-eucalyptus.png" alt="" class="hero-eucalyptus" aria-hidden="true" />
         </div>
         <div class="hero-content reveal">
           <p class="eyebrow">Nos casamos</p>
-          <h1 class="hero-title" id="hero-names">Zaida <em>&</em> Sheila</h1>
+          <h1 class="hero-title hero-title--script" id="hero-names">Zaida <em>&</em> Sheila</h1>
           <div class="hero-divider" aria-hidden="true"><span>🌿</span></div>
           <p class="hero-date" id="hero-date">4 de septiembre de 2027</p>
           <p class="hero-location">Valencia, España</p>
@@ -211,15 +192,40 @@
         </div>
       </section>
 
-      <!-- PROGRAMA DEL DÍA -->
+      <!-- MINUTO A MINUTO -->
       <section id="schedule" class="section section--alt">
         <div class="container">
           <header class="section-header reveal">
-            <p class="eyebrow">Programa</p>
-            <h2 class="section-title">El día de la boda</h2>
+            <p class="eyebrow">Minuto a minuto</p>
+            <h2 class="section-title section-title--script">El día de la boda</h2>
             <p class="section-desc">Todo lo que tenemos preparado para vosotros</p>
           </header>
           <div class="schedule-grid" id="schedule-grid"></div>
+        </div>
+      </section>
+
+      <!-- ILUSTRACIONES ACUARELA -->
+      <section id="watercolor" class="section section--watercolor">
+        <div class="container">
+          <header class="section-header reveal">
+            <p class="eyebrow">Nuestro amor</p>
+            <h2 class="section-title section-title--script">En acuarela</h2>
+            <p class="section-desc">Tres historias, un mismo sentimiento: celebrar el amor</p>
+          </header>
+          <div class="watercolor-gallery reveal">
+            <figure class="watercolor-card watercolor-card--featured">
+              <img src="images/watercolor-couple-ff.png" alt="Dos mujeres en acuarela" loading="lazy" />
+              <figcaption>Zaida & Sheila</figcaption>
+            </figure>
+            <figure class="watercolor-card">
+              <img src="images/watercolor-couple-mf.png" alt="Pareja en acuarela" loading="lazy" />
+              <figcaption>Chica & chico</figcaption>
+            </figure>
+            <figure class="watercolor-card">
+              <img src="images/watercolor-couple-mm.png" alt="Dos chicos en acuarela" loading="lazy" />
+              <figcaption>Dos chicos</figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
@@ -227,7 +233,7 @@
       <section id="dresscode" class="section dresscode-section">
         <div class="container">
           <div class="dresscode-card reveal">
-            <div class="dresscode-icon" aria-hidden="true">👗</div>
+            <img src="images/watercolor-couple-ff.png" alt="" class="dresscode-watercolor" aria-hidden="true" />
             <header class="section-header section-header--compact">
               <p class="eyebrow">Dress code</p>
               <h2 class="section-title" id="dresscode-title">Elegante</h2>
