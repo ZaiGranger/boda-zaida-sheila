@@ -25,7 +25,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ZaidaSheila2027';
 
 // Playlist colaborativa (configurable en Render sin tocar código)
 const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi';
-const SPOTIFY_COLLABORATOR_URL = process.env.SPOTIFY_COLLABORATOR_URL || 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi?si=d4718fdffb854174&pt=6eb40f9559c4e803a340e073831b30ec';
+const SPOTIFY_COLLABORATOR_URL = process.env.SPOTIFY_COLLABORATOR_URL || SPOTIFY_PLAYLIST_URL;
 const SPOTIFY_PLAYLIST_TITLE = process.env.SPOTIFY_PLAYLIST_TITLE || 'Playlist boda Zaida & Sheila';
 
 [UPLOADS_DIR, DATA_DIR].forEach((dir) => {

@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — Fix enlace Spotify caducado (bug fix)
+
+**Archivos:** `js/main.js`, `js/config.js`, `server/index.js`, `index.html`
+
+**Tipo:** bug fix
+
+**Qué se cambió:** El botón usa la URL permanente de la playlist; el enlace de colaboradores con `?pt=` había caducado y no abría Spotify.
+
 ## 2026-07-14 — Fix iconos rotos hojas en móvil (bug fix)
 
 **Archivos:** `index.html`, `styles/watercolor.css`

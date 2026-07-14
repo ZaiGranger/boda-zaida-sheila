@@ -434,7 +434,6 @@ let lastSearchResults = [];
 
 function initSpotifyEmbed() {
   const url = WEDDING_CONFIG.spotifyPlaylistUrl?.trim();
-  const collabUrl = WEDDING_CONFIG.spotifyCollaboratorUrl?.trim() || url;
   const title = WEDDING_CONFIG.spotifyPlaylistTitle || 'Playlist de la boda';
   const panel = document.getElementById('spotify-playlist-panel');
   const link = document.getElementById('spotify-playlist-link');
@@ -446,12 +445,20 @@ function initSpotifyEmbed() {
   const playlistId = url.match(/playlist\/([a-zA-Z0-9]+)/)?.[1];
   if (!playlistId) return;
 
-  // Panel: enlace de colaboradores para que invitados añadan canciones en Spotify
+  // URL permanente de la playlist (el enlace de colaboradores con ?pt= caduca en ~7 días)
+  const openUrl = `https://open.spotify.com/playlist/${playlistId}`;
+
   panel?.classList.remove('hidden');
   setText('spotify-playlist-title', title);
-  if (link) link.href = collabUrl;
+  if (link) {
+    link.href = openUrl;
+    // Respaldo en móvil por si el navegador no abre bien target="_blank"
+    link.onclick = (e) => {
+      e.preventDefault();
+      window.open(openUrl, '_blank', 'noopener,noreferrer');
+    };
+  }
 
-  // Reproductor embebido para escuchar la playlist sin salir de la web
   if (wrap) {
     wrap.classList.remove('hidden');
     wrap.innerHTML = `<iframe src="https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0" width="100%" height="352" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="${escapeHtml(title)}"></iframe>`;
