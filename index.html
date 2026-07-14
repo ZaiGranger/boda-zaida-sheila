@@ -23,8 +23,11 @@
     <!-- Textura de grano sutil para aspecto premium -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <!-- Fondo de hojas acuarela en toda la web -->
-    <div class="page-leaves-bg" aria-hidden="true"></div>
+    <!-- Hojas acuarela en laterales — solo tras abrir la invitación -->
+    <div class="page-leaves-bg" id="page-leaves-bg" aria-hidden="true">
+      <img src="images/watercolor-eucalyptus.png" alt="" class="leaves-edge leaves-edge--left" />
+      <img src="images/watercolor-eucalyptus.png" alt="" class="leaves-edge leaves-edge--right" />
+    </div>
 
     <!-- Barra de progreso de lectura -->
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
@@ -205,17 +208,14 @@
 
             <!-- Tres ilustraciones acuarela como inspiración de vestimenta -->
             <div class="dresscode-gallery" aria-label="Ejemplos de vestimenta en acuarela">
-              <figure class="dresscode-figure dresscode-figure--featured">
-                <img src="images/watercolor-couple-ff.png" alt="Ejemplo elegante: dos mujeres" loading="lazy" />
-                <figcaption>Elegante · dos mujeres</figcaption>
+              <figure class="dresscode-figure">
+                <img src="images/watercolor-couple-ff.png" alt="Ejemplo de vestimenta elegante" loading="lazy" />
               </figure>
               <figure class="dresscode-figure">
-                <img src="images/watercolor-couple-mf.png" alt="Ejemplo elegante: chica y chico" loading="lazy" />
-                <figcaption>Elegante · chica y chico</figcaption>
+                <img src="images/watercolor-couple-mf.png" alt="Ejemplo de vestimenta arreglada" loading="lazy" />
               </figure>
               <figure class="dresscode-figure">
-                <img src="images/watercolor-couple-mm.png" alt="Ejemplo elegante: dos chicos" loading="lazy" />
-                <figcaption>Elegante · dos chicos</figcaption>
+                <img src="images/watercolor-couple-mm.png" alt="Ejemplo de vestimenta semi-formal" loading="lazy" />
               </figure>
             </div>
 

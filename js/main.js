@@ -133,6 +133,8 @@ function initEnvelope() {
       main?.classList.remove('hidden');
       main?.classList.add('visible', 'entering');
       nav?.classList.add('visible');
+      // Hojas laterales solo a partir de aquí
+      document.getElementById('page-leaves-bg')?.classList.add('is-visible');
       setTimeout(() => main?.classList.remove('entering'), 2000);
     }, 2000);
   }

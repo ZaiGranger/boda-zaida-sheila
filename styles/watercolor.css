@@ -27,16 +27,42 @@ body {
   font-family: var(--font-serif);
 }
 
-/* Hojas de eucalipto acuarela — fondo fijo en toda la web */
+/* Hojas de eucalipto — laterales, sin caja blanca, solo tras abrir invitación */
 .page-leaves-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    url('../images/watercolor-eucalyptus.png') no-repeat center -2rem / min(820px, 105vw) auto,
-    linear-gradient(180deg, #f8f4ed 0%, var(--paper) 35%, var(--paper) 100%);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.4s ease, visibility 1.4s ease;
+}
+.page-leaves-bg.is-visible {
   opacity: 1;
+  visibility: visible;
+}
+
+/* multiply hace que el blanco del PNG se funda con el fondo crema */
+.leaves-edge {
+  position: absolute;
+  width: min(380px, 32vw);
+  height: auto;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  filter: saturate(0.9);
+}
+.leaves-edge--left {
+  left: -3%;
+  top: 6%;
+  transform: rotate(-88deg) scaleX(-1);
+  transform-origin: top left;
+}
+.leaves-edge--right {
+  right: -3%;
+  top: 6%;
+  transform: rotate(88deg);
+  transform-origin: top right;
 }
 
 /* El contenido va por encima del fondo de hojas */
@@ -56,7 +82,9 @@ body {
    SOBRE — Papel con solapas y sello de cera rojo
    ========================================================================== */
 .envelope-screen--paper {
-  background: transparent;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #f8f4ed 0%, var(--paper) 50%, #f0ebe2 100%) !important;
 }
 
 .envelope-paper {
@@ -392,21 +420,8 @@ body {
   width: 100%;
   max-height: 240px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 14px rgba(58, 58, 58, 0.08));
-}
-.dresscode-figure--featured img {
-  max-height: 280px;
-}
-.dresscode-figure figcaption {
-  font-family: var(--font-serif);
-  font-size: 0.8rem;
-  font-style: italic;
-  color: var(--ink-muted);
-  margin-top: 0.65rem;
-}
-.dresscode-figure--featured figcaption {
-  color: var(--sage-wc-dark);
-  font-weight: 500;
+  mix-blend-mode: multiply;
+  opacity: 0.92;
 }
 
 /* Timeline y minuto a minuto */

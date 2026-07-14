@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-14 — Hojas laterales solo tras abrir + dresscode sin etiquetas (enhancement)
+
+**Archivos:** `index.html`, `styles/watercolor.css`, `js/main.js`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Hojas en laterales con blend crema (sin caja blanca), ocultas en el sobre; dresscode con 3 acuarelas sin textos de pareja.
+
 ## 2026-07-14 — Ajustes acuarela: dresscode, sobre grande y fondo hojas (enhancement)
 
 **Archivos:** `index.html`, `styles/watercolor.css`, `js/main.js`
