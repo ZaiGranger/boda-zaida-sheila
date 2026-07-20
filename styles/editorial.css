@@ -1,7 +1,5 @@
 /* ==========================================================================
-   EDITORIAL HIGH-END — Acabado ultraprofesional
-   Tipografía Pinyon Script, pan de oro, glassmorphism, aire generoso
-   Se carga DESPUÉS de main.css y watercolor.css
+   EDITORIAL — Acabados premium SIN romper legibilidad del sobre
    ========================================================================== */
 
 :root {
@@ -11,30 +9,33 @@
   --glass-cream: rgba(255, 252, 247, 0.72);
   --shadow-editorial: 0 20px 40px rgba(0, 0, 0, 0.04);
   --shadow-editorial-lg: 0 24px 48px rgba(0, 0, 0, 0.06);
-  /* Degradado “pan de oro” / gold foil */
-  --gold-foil: linear-gradient(
-    135deg,
-    #8a7340 0%,
-    #c4a882 18%,
-    #f0e6c8 42%,
-    #b8924a 58%,
-    #e8d5a3 78%,
-    #9a7b3c 100%
-  );
-  --font-script: 'Pinyon Script', cursive;
+  --font-script: 'Great Vibes', cursive;
 }
 
-/* ---------- Tipografía y jerarquía ---------- */
-body {
-  letter-spacing: 0.01em;
-  line-height: 1.75;
+/* Tipografía: Great Vibes para caligrafía (como la invitación original) */
+.section-title--script,
+.hero-title--script,
+.envelope-names,
+.game-intro-title {
+  font-family: 'Great Vibes', cursive !important;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.nav-brand,
+.footer-monogram {
+  font-family: 'Great Vibes', cursive !important;
+  /* Color sólido — NUNCA foil transparente (invisible en muchos móviles) */
+  color: #3a3a3a !important;
+  -webkit-text-fill-color: #3a3a3a !important;
+  background: none !important;
 }
 
 .eyebrow {
   font-family: 'Josefin Sans', sans-serif !important;
   font-weight: 400;
   font-size: 0.68rem;
-  letter-spacing: 0.28em !important; /* ~2.5–3px */
+  letter-spacing: 0.28em !important;
   text-transform: uppercase;
 }
 
@@ -43,17 +44,6 @@ body {
   font-weight: 400;
   letter-spacing: 0.04em;
   line-height: 1.25;
-}
-
-.section-title--script,
-.hero-title--script,
-.envelope-names,
-.game-intro-title,
-.footer-monogram,
-.nav-brand {
-  font-family: 'Pinyon Script', cursive !important;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
 }
 
 .section-desc {
@@ -69,89 +59,68 @@ body {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-size: clamp(1.15rem, 2.5vw, 1.4rem) !important;
   line-height: 1.8 !important;
-  letter-spacing: 0.02em;
 }
 
-/* ---------- Brillo pan de oro — solo acentos pequeños ---------- */
-/* NO aplicar a nombres grandes sobre fondo crema: quedaban invisibles */
-.gold-foil,
-.nav-brand,
-.footer-monogram {
-  background: var(--gold-foil);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent;
-  animation: foilShimmer 8s ease-in-out infinite;
-}
-
-/* Sobre y hero: tinta oscura legible, como antes */
+/* ---------- SOBRE: nombres SIEMPRE visibles (tinta oscura) ---------- */
 .envelope-names,
+.envelope-names span,
+#envelope-names {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  color: #2d3a32 !important;
+  -webkit-text-fill-color: #2d3a32 !important;
+  opacity: 1 !important; /* anula bugs de animación en móvil */
+  visibility: visible !important;
+  text-shadow: none !important;
+}
+
 .hero-title--script {
   background: none !important;
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
-  color: #3a3a3a !important;
-  -webkit-text-fill-color: #3a3a3a !important;
-  animation: none !important;
-}
-
-.envelope-names span {
-  color: #3a3a3a !important;
-  -webkit-text-fill-color: #3a3a3a !important;
-  background: none !important;
+  color: #2d3a32 !important;
+  -webkit-text-fill-color: #2d3a32 !important;
 }
 
 .hero-title--script em {
   background: none !important;
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
   color: #6d8f7e !important;
   -webkit-text-fill-color: #6d8f7e !important;
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-style: italic;
-  animation: none !important;
 }
 
-@keyframes foilShimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+/* Acento dorado sutil SOLO con color sólido (no gradient clip) */
+.nav-brand:hover,
+.footer-monogram {
+  color: #9a7b3c !important;
+  -webkit-text-fill-color: #9a7b3c !important;
 }
 
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .nav-brand,
-  .footer-monogram {
-    color: #b8924a !important;
-    -webkit-text-fill-color: unset;
-    background: none;
-  }
+.nav-brand {
+  color: #3a3a3a !important;
+  -webkit-text-fill-color: #3a3a3a !important;
 }
 
-/* ---------- Espaciado generoso ---------- */
+/* ---------- Espaciado ---------- */
 .section {
   padding: 7.5rem 0 !important;
 }
-
 .section-header {
   margin-bottom: 3.5rem;
 }
-
 .container {
   padding-left: 1.75rem;
   padding-right: 1.75rem;
 }
 
 @media (max-width: 640px) {
-  .section {
-    padding: 5rem 0 !important;
-  }
-  .container {
-    padding-left: 1.35rem;
-    padding-right: 1.35rem;
-  }
+  .section { padding: 5rem 0 !important; }
+  .container { padding-left: 1.35rem; padding-right: 1.35rem; }
   .hero-title--script {
     font-size: clamp(2.8rem, 14vw, 3.8rem) !important;
+  }
+  .envelope-names {
+    font-size: clamp(2.8rem, 12vw, 4rem) !important;
   }
   .eyebrow {
     letter-spacing: 0.22em !important;
@@ -159,7 +128,7 @@ body {
   }
 }
 
-/* ---------- Navegación glassmorphism ---------- */
+/* ---------- Nav glass ---------- */
 .nav.scrolled {
   background: var(--glass-cream) !important;
   backdrop-filter: blur(12px) saturate(1.15);
@@ -171,10 +140,10 @@ body {
 .nav-link {
   font-family: 'Josefin Sans', sans-serif;
   letter-spacing: 0.18em !important;
-  transition: color 0.3s ease, opacity 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-/* ---------- Tarjetas: sombra suave + borde champán ---------- */
+/* ---------- Tarjetas ---------- */
 .dresscode-card,
 .form-premium,
 .gift-panel,
@@ -187,12 +156,6 @@ body {
   box-shadow: var(--shadow-editorial) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.dresscode-card:hover,
-.gift-panel:hover {
-  box-shadow: var(--shadow-editorial-lg) !important;
 }
 
 .dresscode-tips li {
@@ -200,43 +163,23 @@ body {
   letter-spacing: 0.14em;
 }
 
-/* ---------- Botones: microinteracciones ---------- */
+/* ---------- Botones ---------- */
 .btn {
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease,
     border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
-
 .btn:hover {
   transform: scale(1.02) translateY(-1px);
 }
-
-.btn:active {
-  transform: scale(0.99);
-}
-
 .btn-envelope {
   letter-spacing: 0.28em !important;
   border-color: var(--champagne) !important;
-  box-shadow: 0 4px 24px rgba(184, 160, 122, 0.15);
 }
 
-.btn-envelope:hover {
-  background: #3a3a3a !important;
-  color: #f5f0e8 !important;
-  border-color: #3a3a3a !important;
-}
-
-.btn-gold:hover,
-.btn-ghost:hover,
-.btn-whatsapp:hover,
-.btn-spotify:hover {
-  transform: scale(1.02) translateY(-2px);
-}
-
-/* ---------- Sobre de entrada ---------- */
+/* ---------- Sobre (aspecto clásico) ---------- */
 .envelope-paper {
-  border: 1px solid var(--champagne-soft);
-  box-shadow: var(--shadow-editorial-lg) !important;
+  border: 1px solid rgba(58, 58, 58, 0.08);
+  box-shadow: 0 12px 48px rgba(58, 58, 58, 0.12) !important;
 }
 
 .envelope-music-hint {
@@ -245,33 +188,26 @@ body {
   font-size: 0.62rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ink-muted, #6b6560);
-  opacity: 0;
-  animation: envelopeReveal 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.25s forwards;
+  color: #6b6560;
 }
 
 .envelope-family {
   letter-spacing: 0.28em !important;
 }
 
-.envelope-invite {
-  line-height: 1.85 !important;
-}
-
-/* ---------- Reveal al scroll ---------- */
+/* ---------- Reveal scroll ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ---------- Widget música flotante (glass + EQ) ---------- */
+/* ---------- Widget música ---------- */
 .fab-music {
   position: fixed;
   bottom: 1.5rem;
@@ -282,8 +218,8 @@ body {
   border-radius: 50%;
   border: 1px solid var(--champagne-border);
   background: var(--glass-cream);
-  backdrop-filter: blur(12px) saturate(1.1);
-  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--shadow-editorial);
   display: flex;
   align-items: center;
@@ -292,42 +228,31 @@ body {
   opacity: 0;
   transform: translateY(16px) scale(0.9);
   pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
 .fab-music.is-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
-
-.fab-music:hover {
-  transform: scale(1.06);
-  box-shadow: var(--shadow-editorial-lg);
-}
-
 .fab-music-icon {
   display: none;
   font-size: 1.1rem;
-  line-height: 1;
   color: #3a3a3a;
 }
-
 .fab-music-eq {
   display: none;
   align-items: flex-end;
   gap: 3px;
   height: 16px;
 }
-
 .fab-music-eq i {
   display: block;
   width: 3px;
-  background: linear-gradient(180deg, #c4a882, #6d8f7e);
+  background: #6d8f7e;
   border-radius: 1px;
   animation: eqPulse 0.9s ease-in-out infinite;
 }
-
 .fab-music-eq i:nth-child(1) { height: 6px; animation-delay: 0s; }
 .fab-music-eq i:nth-child(2) { height: 14px; animation-delay: 0.15s; }
 .fab-music-eq i:nth-child(3) { height: 10px; animation-delay: 0.3s; }
@@ -341,15 +266,9 @@ body {
 .fab-music.is-playing .fab-music-eq { display: flex; }
 .fab-music.is-playing .fab-music-icon--note,
 .fab-music.is-playing .fab-music-icon--mute { display: none; }
-
 .fab-music.is-paused .fab-music-eq { display: none; }
 .fab-music.is-paused .fab-music-icon--mute { display: none; }
 .fab-music.is-paused .fab-music-icon--note { display: block; }
-
-.fab-rsvp {
-  bottom: 1.5rem;
-  right: 1.5rem;
-}
 
 @media (max-width: 480px) {
   .fab-music {
@@ -358,13 +277,6 @@ body {
     width: 46px;
     height: 46px;
   }
-  .fab-rsvp {
-    bottom: 1.15rem;
-    right: 1rem;
-    padding: 0.7rem 1rem;
-  }
-
-  /* Hojas acuarela: no tapar texto en móvil */
   .leaves-corner {
     width: min(110px, 28vw) !important;
     height: min(110px, 28vw) !important;
@@ -379,34 +291,19 @@ body {
   .leaves-vine--bottom {
     display: none !important;
   }
-  .page-leaves-bg .leaves-wash {
-    opacity: 0.5;
-  }
 }
 
-/* ---------- Hero más aireado ---------- */
 .hero--watercolor {
   padding-top: 7rem !important;
   padding-bottom: 5rem !important;
 }
 
-.hero-actions .btn {
-  min-width: 11rem;
-}
-
-/* ---------- Footer editorial ---------- */
-.footer {
-  border-top: 1px solid var(--champagne-soft);
-  letter-spacing: 0.06em;
-}
-
-.footer-monogram {
-  letter-spacing: 0.08em;
-}
-
-/* Spotify panel: mismo glass */
 .spotify-panel {
   background: rgba(255, 252, 247, 0.7) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+.footer {
+  border-top: 1px solid var(--champagne-soft);
 }

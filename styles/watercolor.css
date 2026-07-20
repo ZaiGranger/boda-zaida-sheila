@@ -16,7 +16,7 @@
   --gold-wc: #b8a07a;
   --seal-red: #c45c4a;
   --seal-red-dark: #a84838;
-  --font-script: 'Pinyon Script', cursive;
+  --font-script: 'Great Vibes', cursive;
   --font-serif: 'Lora', Georgia, serif;
 }
 
@@ -282,24 +282,22 @@ body {
 }
 
 .envelope-names {
-  font-family: var(--font-script);
-  font-size: clamp(3.5rem, 11vw, 5.5rem);
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(3.2rem, 11vw, 5.2rem);
   font-weight: 400;
-  color: var(--ink) !important;
-  -webkit-text-fill-color: var(--ink);
+  color: #2d3a32 !important;
+  -webkit-text-fill-color: #2d3a32 !important;
   line-height: 1.2;
   margin-bottom: 0.5rem;
-  /* Asegurar que se vean por encima del efecto foil */
   background: none !important;
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
+  opacity: 1;
 }
 .envelope-names span {
-  font-family: var(--font-serif);
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 0.6em;
-  color: var(--ink) !important;
-  -webkit-text-fill-color: var(--ink);
+  font-size: 0.55em;
+  color: #2d3a32 !important;
+  -webkit-text-fill-color: #2d3a32 !important;
 }
 
 .envelope-invite {
