@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFAQ();
   initRSVP();
   initSongs();
-  initGame();
+  initCatchBouquetGame();
   initWeather();
   initShare();
   initAddToCalendar();
@@ -788,106 +788,25 @@ async function loadSongs() {
 }
 
 // =============================================================================
-// MINIJUEGO (con sistema de combo)
+// MINIJUEGO — el motor vive en js/game.js (Canvas + Web Audio)
 // =============================================================================
-function initGame() {
-  const board = document.getElementById('game-board');
-  const startScreen = document.getElementById('game-start');
-  const resultScreen = document.getElementById('game-result');
-  const scoreEl = document.getElementById('game-score');
-  const comboEl = document.getElementById('game-combo');
-  const timerEl = document.getElementById('game-timer');
-
-  let score = 0, combo = 1, timeLeft = 30, isPlaying = false;
-  let timerInterval, spawnInterval, comboTimeout;
-
-  document.getElementById('btn-start-game')?.addEventListener('click', startGame);
-  document.getElementById('btn-play-again')?.addEventListener('click', () => {
-    resultScreen?.classList.add('hidden');
-    startScreen?.classList.remove('hidden');
-    loadLeaderboard();
-  });
-
-  function startGame() {
-    const name = document.getElementById('game-player-name')?.value.trim();
-    if (!name) { alert('Escribe tu nombre'); return; }
-
-    score = 0; combo = 1; timeLeft = 30; isPlaying = true;
-    scoreEl.textContent = '0'; comboEl.textContent = 'x1'; timerEl.textContent = '30';
-    startScreen?.classList.add('hidden');
-    resultScreen?.classList.add('hidden');
-    board?.querySelectorAll('.game-bouquet').forEach((b) => b.remove());
-
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      timerEl.textContent = String(timeLeft);
-      if (timeLeft <= 0) endGame(name);
-    }, 1000);
-
-    spawnInterval = setInterval(spawnBouquet, 700);
-  }
-
-  function spawnBouquet() {
-    if (!isPlaying || !board) return;
-    const b = document.createElement('div');
-    b.className = 'game-bouquet';
-    b.textContent = ['💐', '🌸', '💮', '🌺'][Math.floor(Math.random() * 4)];
-    b.style.left = `${Math.random() * 85 + 5}%`;
-    const dur = 1.8 + Math.random() * 1.5;
-    b.style.animationDuration = `${dur}s`;
-
-    b.addEventListener('click', () => {
-      if (!isPlaying) return;
-      score += combo;
-      scoreEl.textContent = String(score);
-      combo = Math.min(combo + 1, 5);
-      comboEl.textContent = `x${combo}`;
-      clearTimeout(comboTimeout);
-      comboTimeout = setTimeout(() => { combo = 1; comboEl.textContent = 'x1'; }, 1500);
-      b.classList.add('caught');
-      setTimeout(() => b.remove(), 250);
-    });
-
-    board.appendChild(b);
-    setTimeout(() => b.remove(), dur * 1000);
-  }
-
-  async function endGame(name) {
-    isPlaying = false;
-    clearInterval(timerInterval);
-    clearInterval(spawnInterval);
-    board?.querySelectorAll('.game-bouquet').forEach((b) => b.remove());
-
-    try {
-      const res = await fetch('/api/scores', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ playerName: name, score }),
-      });
-      const data = await res.json();
-      setText('result-score', String(score));
-      setText('result-prize', data.result?.prize || '¡Gracias por jugar!');
-    } catch {
-      setText('result-score', String(score));
-    }
-
-    resultScreen?.classList.remove('hidden');
-    if (score >= 15) fireConfetti();
-    loadLeaderboard();
-  }
-
-  loadLeaderboard();
-}
+// initCatchBouquetGame() se llama desde DOMContentLoaded (definida en game.js).
 
 async function loadLeaderboard() {
   const list = document.getElementById('leaderboard-list');
   if (!list) return;
   try {
     const scores = await (await fetch('/api/scores')).json();
-    if (!scores.length) { list.innerHTML = '<li style="justify-content:center;color:#999">Sé el primero en jugar</li>'; return; }
+    if (!scores.length) {
+      list.innerHTML = '<li class="rank-empty">Sé el primero en jugar</li>';
+      return;
+    }
     list.innerHTML = scores.slice(0, 10).map((s) =>
       `<li><span>${escapeHtml(s.playerName)}</span><span>${s.score} pts</span></li>`
     ).join('');
-  } catch { list.innerHTML = ''; }
+  } catch {
+    list.innerHTML = '';
+  }
 }
 
 // =============================================================================

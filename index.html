@@ -543,35 +543,63 @@
         </div>
       </section>
 
-      <!-- MINIJUEGO -->
+      <!-- MINIJUEGO — Atrapa el ramo (Canvas app-style) -->
       <section id="game" class="section section--alt">
         <div class="container">
           <header class="section-header reveal">
             <p class="eyebrow">Diversión</p>
             <h2 class="section-title">Atrapa el ramo</h2>
-            <p class="section-desc">30 segundos para demostrar tus reflejos. ¡Hay premios digitales!</p>
+            <p class="section-desc">Mueve la cesta y atrapa ramos durante 30 segundos. ¡Cuidado con la tarta!</p>
           </header>
 
-          <div class="game-panel reveal">
+          <div class="game-panel game-panel--app reveal">
+            <!-- HUD superior -->
             <div class="game-hud">
               <div class="hud-item">Puntos <strong id="game-score">0</strong></div>
               <div class="hud-item">Combo <strong id="game-combo">x1</strong></div>
+              <div class="hud-item">Récord <strong id="game-highscore">0</strong></div>
               <div class="hud-item">Tiempo <strong id="game-timer">30</strong>s</div>
             </div>
 
             <div class="game-arena" id="game-board">
-              <div class="game-intro" id="game-start">
-                <p class="game-intro-title">¿Preparado/a?</p>
-                <input type="text" id="game-player-name" class="game-input" placeholder="Tu nombre" maxlength="50" />
-                <button class="btn btn-gold" id="btn-start-game" type="button">¡Empezar!</button>
-              </div>
-            </div>
+              <!-- Badge congelación / toast -->
+              <div class="game-freeze-badge" id="game-freeze-badge" aria-hidden="true">❄ Congelado</div>
+              <div class="game-toast" id="game-toast" aria-live="polite"></div>
 
-            <div class="game-outcome hidden" id="game-result">
-              <h3>¡Partida terminada!</h3>
-              <p class="outcome-score">Puntuación: <strong id="result-score">0</strong></p>
-              <p class="outcome-prize" id="result-prize"></p>
-              <button class="btn btn-ghost-dark" id="btn-play-again" type="button">Jugar otra vez</button>
+              <!-- Mute flotante del juego -->
+              <button type="button" class="game-mute" id="btn-game-mute" aria-label="Silenciar sonidos del juego" aria-pressed="false">
+                <span class="game-mute-on" aria-hidden="true">🔊</span>
+                <span class="game-mute-off" aria-hidden="true">🔇</span>
+              </button>
+
+              <!-- Canvas responsive -->
+              <div class="game-canvas-wrap" id="game-canvas-wrap">
+                <canvas id="game-canvas" aria-label="Área de juego Atrapa el ramo"></canvas>
+              </div>
+
+              <!-- Overlay inicio -->
+              <div class="game-overlay game-intro" id="game-start">
+                <p class="game-intro-eyebrow">Minijuego</p>
+                <p class="game-intro-title">Atrapa el ramo</p>
+                <ul class="game-legend">
+                  <li><span class="leg-dot leg-dot--pink"></span> Ramo +10</li>
+                  <li><span class="leg-dot leg-dot--gold"></span> Dorado +30</li>
+                  <li><span class="leg-dot leg-dot--blue"></span> Power-up</li>
+                  <li><span class="leg-dot leg-dot--cake"></span> Tarta −10</li>
+                </ul>
+                <input type="text" id="game-player-name" class="game-input" placeholder="Tu nombre" maxlength="50" autocomplete="nickname" />
+                <button class="btn btn-gold" id="btn-start-game" type="button">Toca para jugar</button>
+                <p class="game-controls-hint">Móvil: arrastra · PC: ratón o ← →</p>
+              </div>
+
+              <!-- Overlay fin -->
+              <div class="game-overlay game-outcome hidden" id="game-result">
+                <h3>¡Partida terminada!</h3>
+                <div class="result-stars" id="result-stars" aria-label="Estrellas conseguidas"></div>
+                <p class="outcome-score">Puntuación: <strong id="result-score">0</strong></p>
+                <p class="outcome-prize" id="result-prize"></p>
+                <button class="btn btn-gold" id="btn-play-again" type="button">Volver a jugar</button>
+              </div>
             </div>
 
             <div class="game-ranking">
@@ -613,6 +641,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/game.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

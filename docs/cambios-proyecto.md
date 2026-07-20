@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-20 — Minijuego Canvas Atrapa el ramo (feature)
+
+**Archivos:** `js/game.js`, `js/main.js`, `index.html`, `styles/main.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** Motor Canvas 60 FPS, cesta táctil/teclado, ramos/dorado/power-up/tarta, partículas, Web Audio, récord localStorage, mute.
+
 ## 2026-07-20 — Música de fondo + acabado editorial high-end (feature)
 
 **Archivos:** `audio/marry-you.mp3`, `index.html`, `js/config.js`, `js/main.js`, `styles/editorial.css`
