@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-20 — Música de fondo + acabado editorial high-end (feature)
+
+**Archivos:** `audio/marry-you.mp3`, `index.html`, `js/config.js`, `js/main.js`, `styles/editorial.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** Audio al abrir invitación (volumen suave + toggle flotante); tipografía/espaciado/glassmorphism/microinteracciones estilo editorial.
+
 ## 2026-07-14 — Calendario móvil sin descargar archivo (bug fix)
 
 **Archivos:** `js/main.js`, `server/index.js`

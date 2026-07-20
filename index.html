@@ -17,9 +17,15 @@
 
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/watercolor.css" />
+    <link rel="stylesheet" href="styles/editorial.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>" />
   </head>
   <body>
+    <!-- Audio de fondo: solo se reproduce tras el clic (política anti-autoplay) -->
+    <audio id="bg-music" preload="auto" loop playsinline>
+      <source src="audio/marry-you.mp3" type="audio/mpeg" />
+    </audio>
+
     <!-- Textura de grano sutil para aspecto premium -->
     <div class="grain-overlay" aria-hidden="true"></div>
 
@@ -144,12 +150,29 @@
           </div>
 
           <button class="btn btn-envelope envelope-reveal" id="btn-open-invite" type="button">
-            Ver invitación
+            Abrir invitación
           </button>
+          <p class="envelope-music-hint envelope-reveal">♪ La música empezará al abrir</p>
         </div>
       </div>
 
     </div>
+
+    <!-- Toggle música flotante (aparece tras abrir la invitación) -->
+    <button
+      type="button"
+      id="btn-music-toggle"
+      class="fab-music"
+      aria-label="Pausar o reanudar música"
+      aria-pressed="false"
+      hidden
+    >
+      <span class="fab-music-eq" aria-hidden="true">
+        <i></i><i></i><i></i><i></i>
+      </span>
+      <span class="fab-music-icon fab-music-icon--note" aria-hidden="true">♪</span>
+      <span class="fab-music-icon fab-music-icon--mute" aria-hidden="true">🔇</span>
+    </button>
 
     <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
     <div id="main-content" class="main-content hidden">

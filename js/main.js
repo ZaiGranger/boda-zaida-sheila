@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   await loadPublicConfig();
   applyConfig();
+  initBackgroundMusic();
   initEnvelope();
   initNavigation();
   initScrollProgress();
@@ -95,6 +96,82 @@ function setText(id, text) {
 }
 
 // =============================================================================
+// MÚSICA DE FONDO — se inicia con el clic (cumple autoplay de navegadores)
+// =============================================================================
+let bgAudio = null;
+let musicStarted = false;
+
+/**
+ * Prepara el <audio>: volumen suave, bucle y botón flotante play/pausa.
+ * No reproduce hasta que el usuario pulse "Abrir invitación".
+ */
+function initBackgroundMusic() {
+  bgAudio = document.getElementById('bg-music');
+  const toggle = document.getElementById('btn-music-toggle');
+  const cfg = WEDDING_CONFIG.backgroundMusic || {};
+
+  if (!bgAudio) return;
+
+  // Ruta y volumen desde config (por si cambian la canción)
+  if (cfg.src) {
+    const source = bgAudio.querySelector('source');
+    if (source) source.src = cfg.src;
+    bgAudio.load();
+  }
+  bgAudio.volume = typeof cfg.volume === 'number' ? cfg.volume : 0.35;
+  bgAudio.loop = cfg.loop !== false;
+
+  // Botón flotante: pausa o reanuda
+  toggle?.addEventListener('click', () => {
+    if (!bgAudio) return;
+    if (bgAudio.paused) {
+      bgAudio.play().then(() => setMusicUiPlaying(true)).catch(() => setMusicUiPlaying(false));
+    } else {
+      bgAudio.pause();
+      setMusicUiPlaying(false);
+    }
+  });
+
+  // Si el audio se pausa desde fuera (auriculares, etc.), sincronizar UI
+  bgAudio.addEventListener('play', () => setMusicUiPlaying(true));
+  bgAudio.addEventListener('pause', () => setMusicUiPlaying(false));
+}
+
+/** Actualiza el aspecto del botón (ecualizador animado vs icono mute) */
+function setMusicUiPlaying(isPlaying) {
+  const toggle = document.getElementById('btn-music-toggle');
+  if (!toggle) return;
+  toggle.classList.toggle('is-playing', isPlaying);
+  toggle.classList.toggle('is-paused', !isPlaying);
+  toggle.setAttribute('aria-pressed', String(isPlaying));
+  toggle.setAttribute('aria-label', isPlaying ? 'Pausar música' : 'Reanudar música');
+}
+
+/**
+ * Arranca la música en el momento del clic (gesto de usuario = autoplay permitido).
+ * Si falla (política del navegador), el botón flotante sigue disponible.
+ */
+async function startBackgroundMusic() {
+  if (!bgAudio || musicStarted) return;
+  musicStarted = true;
+
+  const toggle = document.getElementById('btn-music-toggle');
+  if (toggle) {
+    toggle.hidden = false;
+    toggle.classList.add('is-visible');
+  }
+
+  try {
+    await bgAudio.play();
+    setMusicUiPlaying(true);
+  } catch (err) {
+    // Algunos navegadores aún bloquean: el usuario puede pulsar el botón ♪
+    console.warn('No se pudo iniciar el audio automáticamente:', err);
+    setMusicUiPlaying(false);
+  }
+}
+
+// =============================================================================
 // SOBRE / INVITACIÓN — Apertura con efectos florales
 // =============================================================================
 function initEnvelope() {
@@ -107,6 +184,9 @@ function initEnvelope() {
   function openInvitation() {
     if (isOpening) return;
     isOpening = true;
+
+    // Arrancar música YA (dentro del gesto de clic del usuario)
+    startBackgroundMusic();
 
     // 1. Romper el sello de cera rojo
     waxSeal?.classList.add('breaking');

@@ -21,6 +21,14 @@ const WEDDING_CONFIG = {
   spotifyCollaboratorUrl: 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi',
   spotifyPlaylistTitle: 'Playlist boda Zaida & Sheila',
 
+  // Música de fondo (se inicia al pulsar "Abrir invitación")
+  // Volumen suave 0–1; el archivo está en /audio/marry-you.mp3
+  backgroundMusic: {
+    src: 'audio/marry-you.mp3',
+    volume: 0.35,
+    loop: true,
+  },
+
   venue: {
     name: 'Ceremonia',
     address: 'Calle Literato Azorín 32',

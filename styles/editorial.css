@@ -1,0 +1,320 @@
+/* ==========================================================================
+   EDITORIAL HIGH-END — Capa de acabado ultraprofesional
+   Tipografía cuidada, glassmorphism, aire generoso, microinteracciones
+   Se carga DESPUÉS de main.css y watercolor.css para refinar sin romper
+   ========================================================================== */
+
+:root {
+  --champagne: #c4b089;
+  --champagne-soft: rgba(196, 176, 137, 0.35);
+  --champagne-border: rgba(184, 160, 122, 0.45);
+  --glass-cream: rgba(255, 252, 247, 0.72);
+  --shadow-editorial: 0 10px 40px rgba(58, 58, 58, 0.07);
+  --shadow-editorial-lg: 0 20px 60px rgba(58, 58, 58, 0.1);
+}
+
+/* ---------- Tipografía y jerarquía ---------- */
+body {
+  letter-spacing: 0.01em;
+  line-height: 1.75;
+}
+
+.eyebrow {
+  font-family: 'Josefin Sans', sans-serif !important;
+  font-weight: 400;
+  font-size: 0.68rem;
+  letter-spacing: 0.38em !important;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+
+.section-title--script,
+.hero-title--script,
+.envelope-names {
+  font-family: 'Great Vibes', cursive !important;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.section-desc {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 36em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-quote {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem) !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Espaciado generoso (menos saturación) ---------- */
+.section {
+  padding: 7.5rem 0 !important;
+}
+
+.section-header {
+  margin-bottom: 3.5rem;
+}
+
+.container {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 5rem 0 !important;
+  }
+  .container {
+    padding-left: 1.35rem;
+    padding-right: 1.35rem;
+  }
+  .hero-title--script {
+    font-size: clamp(2.8rem, 14vw, 3.8rem) !important;
+  }
+  .eyebrow {
+    letter-spacing: 0.28em !important;
+    font-size: 0.62rem;
+  }
+}
+
+/* ---------- Navegación glassmorphism ---------- */
+.nav.scrolled {
+  background: var(--glass-cream) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom: 1px solid var(--champagne-border) !important;
+  box-shadow: var(--shadow-editorial);
+}
+
+.nav-link {
+  letter-spacing: 0.18em !important;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-brand {
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Tarjetas y paneles: champán + sombra suave ---------- */
+.dresscode-card,
+.form-premium,
+.gift-panel,
+.spotify-panel,
+.game-panel,
+.memories-info,
+.location-info {
+  border: 1px solid var(--champagne-border) !important;
+  box-shadow: var(--shadow-editorial) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.dresscode-card:hover,
+.gift-panel:hover {
+  box-shadow: var(--shadow-editorial-lg) !important;
+}
+
+.dresscode-tips li {
+  border-color: var(--champagne-border) !important;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- Botones: microinteracciones ---------- */
+.btn {
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.btn:hover {
+  transform: scale(1.02) translateY(-1px);
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn-envelope {
+  letter-spacing: 0.28em !important;
+  border-color: var(--champagne) !important;
+  box-shadow: 0 4px 24px rgba(184, 160, 122, 0.15);
+}
+
+.btn-envelope:hover {
+  background: #3a3a3a !important;
+  color: #f5f0e8 !important;
+  border-color: #3a3a3a !important;
+}
+
+.btn-gold:hover,
+.btn-ghost:hover,
+.btn-whatsapp:hover,
+.btn-spotify:hover {
+  transform: scale(1.02) translateY(-2px);
+}
+
+/* ---------- Sobre de entrada más editorial ---------- */
+.envelope-paper {
+  border: 1px solid var(--champagne-soft);
+  box-shadow: var(--shadow-editorial-lg) !important;
+}
+
+.envelope-music-hint {
+  margin-top: 1.25rem;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-muted, #6b6560);
+  opacity: 0;
+  animation: envelopeReveal 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.25s forwards;
+}
+
+.envelope-family {
+  letter-spacing: 0.32em !important;
+}
+
+.envelope-invite {
+  line-height: 1.85 !important;
+}
+
+/* ---------- Reveal al scroll más suave ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Botón flotante de música ---------- */
+.fab-music {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 1000;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--champagne-border);
+  background: var(--glass-cream);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-editorial);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fab-music.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.fab-music:hover {
+  transform: scale(1.06);
+  box-shadow: var(--shadow-editorial-lg);
+}
+
+.fab-music-icon {
+  display: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #3a3a3a;
+}
+
+/* Ecualizador animado cuando suena */
+.fab-music-eq {
+  display: none;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+
+.fab-music-eq i {
+  display: block;
+  width: 3px;
+  background: #6d8f7e;
+  border-radius: 1px;
+  animation: eqPulse 0.9s ease-in-out infinite;
+}
+
+.fab-music-eq i:nth-child(1) { height: 6px; animation-delay: 0s; }
+.fab-music-eq i:nth-child(2) { height: 14px; animation-delay: 0.15s; }
+.fab-music-eq i:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.fab-music-eq i:nth-child(4) { height: 16px; animation-delay: 0.45s; }
+
+@keyframes eqPulse {
+  0%, 100% { transform: scaleY(0.45); opacity: 0.7; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+.fab-music.is-playing .fab-music-eq { display: flex; }
+.fab-music.is-playing .fab-music-icon--note,
+.fab-music.is-playing .fab-music-icon--mute { display: none; }
+
+.fab-music.is-paused .fab-music-eq { display: none; }
+.fab-music.is-paused .fab-music-icon--mute { display: none; }
+.fab-music.is-paused .fab-music-icon--note { display: block; }
+
+/* Evitar solapamiento: música a la izquierda, RSVP a la derecha */
+.fab-rsvp {
+  bottom: 1.5rem;
+  right: 1.5rem;
+}
+
+@media (max-width: 480px) {
+  .fab-music {
+    bottom: 1.15rem;
+    left: 1rem;
+    width: 46px;
+    height: 46px;
+  }
+  .fab-rsvp {
+    bottom: 1.15rem;
+    right: 1rem;
+    padding: 0.7rem 1rem;
+  }
+}
+
+/* ---------- Hero más aireado ---------- */
+.hero--watercolor {
+  padding-top: 7rem !important;
+  padding-bottom: 5rem !important;
+}
+
+.hero-actions .btn {
+  min-width: 11rem;
+}
+
+/* ---------- Footer editorial ---------- */
+.footer {
+  border-top: 1px solid var(--champagne-soft);
+  letter-spacing: 0.06em;
+}
+
+.footer-monogram {
+  letter-spacing: 0.08em;
+}
