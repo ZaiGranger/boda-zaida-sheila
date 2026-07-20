@@ -16,10 +16,10 @@
 
   // Tipos de objetos que caen
   const ITEM_TYPES = {
-    normal: { weight: 55, points: 10, radius: 22, color: '#e8b4c8', glow: null },
-    golden: { weight: 12, points: 30, radius: 24, color: '#d4af37', glow: '#ffe08a' },
-    power: { weight: 15, points: 0, radius: 18, color: '#8ecae6', glow: '#bde0fe' }, // cava / anillo
-    obstacle: { weight: 18, points: -10, radius: 20, color: '#c9a66b', glow: null }, // tarta
+    normal: { weight: 55, points: 10, radius: 28, color: '#e8b4c8', glow: null },
+    golden: { weight: 12, points: 30, radius: 30, color: '#d4af37', glow: '#ffe08a' },
+    power: { weight: 15, points: 0, radius: 24, color: '#8ecae6', glow: '#bde0fe' },
+    obstacle: { weight: 18, points: -10, radius: 26, color: '#c9a66b', glow: null },
   };
 
   // ---------------------------------------------------------------------------
@@ -98,35 +98,53 @@
   };
 
   // ---------------------------------------------------------------------------
-  // Canvas responsive (sin deformar)
+  // Canvas responsive — tamaño fiable en móvil (sin trucos de DPR que fallan)
   // ---------------------------------------------------------------------------
   function resizeCanvas() {
-    if (!canvas || !wrap) return;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!canvas || !wrap || !ctx) return;
 
-    // Si la sección está display:none, clientWidth es 0 → usar el ancho del panel o de la ventana
-    let cssW = wrap.clientWidth;
-    if (cssW < 40) {
-      const panel = wrap.closest('.game-panel') || wrap.closest('.container');
-      cssW = panel?.clientWidth || Math.min(480, window.innerWidth - 48);
-    }
-    cssW = Math.max(260, cssW);
+    // Medir el área visible real del escenario
+    const arena = document.getElementById('game-board');
+    const rect = (arena || wrap).getBoundingClientRect();
+    let cssW = Math.round(rect.width) || wrap.clientWidth || arena?.clientWidth || 0;
+    if (cssW < 40) cssW = Math.min(480, Math.max(280, window.innerWidth - 48));
 
-    const cssH = Math.max(340, Math.min(460, Math.round(cssW * 0.75)));
+    // Altura fija generosa para que siempre se vea el campo de juego
+    const cssH = 380;
+
+    wrap.style.width = '100%';
     wrap.style.height = `${cssH}px`;
-    canvas.width = Math.floor(cssW * dpr);
-    canvas.height = Math.floor(cssH * dpr);
-    canvas.style.width = `${cssW}px`;
+    arena && (arena.style.minHeight = `${cssH}px`);
+
+    // IMPORTANTE: buffer = píxeles CSS (sin devicePixelRatio).
+    // En algunos móviles el escalado DPR dejaba el dibujo “invisible”.
+    // Un poco menos nítido en retina, pero SIEMPRE visible.
+    const bw = Math.max(280, cssW);
+    const bh = cssH;
+    if (canvas.width !== bw || canvas.height !== bh) {
+      canvas.width = bw;
+      canvas.height = bh;
+    }
+    canvas.style.width = '100%';
     canvas.style.height = `${cssH}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    W = cssW;
-    H = cssH;
-    basket.w = Math.max(64, Math.min(96, W * 0.2));
-    basket.h = basket.w * 0.4;
-    basket.y = H - basket.h - 18;
+    canvas.style.display = 'block';
+    canvas.style.visibility = 'visible';
+    canvas.style.opacity = '1';
+    canvas.style.position = 'relative';
+    canvas.style.zIndex = '1';
+
+    // Reset de matriz en cada resize
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    W = bw;
+    H = bh;
+    basket.w = Math.max(80, Math.min(110, W * 0.22));
+    basket.h = basket.w * 0.42;
+    basket.y = H - basket.h - 20;
     if (!playing || basket.x < basket.w / 2 || basket.x > W - basket.w / 2) {
       basket.x = W / 2;
     }
+    dpr = 1;
   }
 
   // ---------------------------------------------------------------------------
@@ -191,25 +209,10 @@
   }
 
   function startGame() {
-    // IMPORTANTE: recalcular tamaño ahora que la sección es visible
     resizeCanvas();
     if (W < 40 || H < 40) {
-      // Un solo reintento en el siguiente frame (por si el layout aún no midió)
       requestAnimationFrame(() => {
         resizeCanvas();
-        if (W < 40) {
-          W = Math.min(480, window.innerWidth - 48);
-          H = Math.max(340, Math.round(W * 0.75));
-          canvas.width = Math.floor(W * dpr);
-          canvas.height = Math.floor(H * dpr);
-          canvas.style.width = `${W}px`;
-          canvas.style.height = `${H}px`;
-          wrap.style.height = `${H}px`;
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          basket.w = Math.max(64, W * 0.2);
-          basket.h = basket.w * 0.4;
-          basket.y = H - basket.h - 18;
-        }
         beginRound();
       });
       return;
@@ -457,26 +460,31 @@
   // ---------------------------------------------------------------------------
   // Dibujado
   // ---------------------------------------------------------------------------
-  function drawIdleFrame() {
-    if (!ctx) return;
-    drawBackground();
-    drawBasket();
-  }
-
   function drawFrame() {
+    if (!ctx || W < 10 || H < 10) return;
+    // Asegurar transform limpia cada frame (evita bugs de móvil)
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
     drawBackground();
     // Velos de power-up
     if (frozen > 0) {
-      ctx.fillStyle = 'rgba(142, 202, 230, 0.12)';
+      ctx.fillStyle = 'rgba(142, 202, 230, 0.18)';
       ctx.fillRect(0, 0, W, H);
     }
     if (speedBoost > 0) {
-      ctx.fillStyle = 'rgba(212, 175, 55, 0.08)';
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.12)';
       ctx.fillRect(0, 0, W, H);
     }
 
     items.forEach(drawItem);
     particles.forEach(drawParticle);
+    drawBasket();
+  }
+
+  function drawIdleFrame() {
+    if (!ctx || W < 10 || H < 10) return;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    drawBackground();
     drawBasket();
   }
 
