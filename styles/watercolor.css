@@ -285,11 +285,22 @@ body {
   font-family: var(--font-script);
   font-size: clamp(3.5rem, 11vw, 5.5rem);
   font-weight: 400;
-  color: var(--ink);
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink);
   line-height: 1.2;
   margin-bottom: 0.5rem;
+  /* Asegurar que se vean por encima del efecto foil */
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
 }
-.envelope-names span { font-family: var(--font-serif); font-style: italic; font-size: 0.6em; }
+.envelope-names span {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.6em;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink);
+}
 
 .envelope-invite {
   font-family: var(--font-serif);
