@@ -72,11 +72,10 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* ---------- Brillo pan de oro (iniciales, nombres, acentos) ---------- */
+/* ---------- Brillo pan de oro — solo acentos pequeños ---------- */
+/* NO aplicar a nombres grandes sobre fondo crema: quedaban invisibles */
 .gold-foil,
 .nav-brand,
-.envelope-names,
-.hero-title--script,
 .footer-monogram {
   background: var(--gold-foil);
   background-size: 200% 200%;
@@ -87,16 +86,32 @@ body {
   animation: foilShimmer 8s ease-in-out infinite;
 }
 
-/* El “&” del hero mantiene contraste serif dentro del foil */
+/* Sobre y hero: tinta oscura legible, como antes */
+.envelope-names,
+.hero-title--script {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  color: #3a3a3a !important;
+  -webkit-text-fill-color: #3a3a3a !important;
+  animation: none !important;
+}
+
+.envelope-names span {
+  color: #3a3a3a !important;
+  -webkit-text-fill-color: #3a3a3a !important;
+  background: none !important;
+}
+
 .hero-title--script em {
-  background: var(--gold-foil);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent;
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  color: #6d8f7e !important;
+  -webkit-text-fill-color: #6d8f7e !important;
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-style: italic;
+  animation: none !important;
 }
 
 @keyframes foilShimmer {
@@ -104,11 +119,8 @@ body {
   50% { background-position: 100% 50%; }
 }
 
-/* Fallback si el navegador no soporta background-clip en texto */
 @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
   .nav-brand,
-  .envelope-names,
-  .hero-title--script,
   .footer-monogram {
     color: #b8924a !important;
     -webkit-text-fill-color: unset;
