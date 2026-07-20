@@ -1,5 +1,13 @@
 # Cambios del proyecto
 
+## 2026-07-20 — Acabado high-end: Pinyon Script, pan de oro, OG y audio fade (enhancement)
+
+**Archivos:** `index.html`, `styles/editorial.css`, `styles/main.css`, `styles/watercolor.css`, `js/main.js`, `js/config.js`, `assets/audio/boda.mp3`, `images/og-cover.png`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Tipografía Pinyon Script; gold foil; glass nav/música; solapa 3D; audio fade-in; meta Open Graph; hojas menos invasivas en móvil.
+
 ## 2026-07-20 — Minijuego Canvas Atrapa el ramo (feature)
 
 **Archivos:** `js/game.js`, `js/main.js`, `index.html`, `styles/main.css`

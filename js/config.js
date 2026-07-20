@@ -24,8 +24,8 @@ const WEDDING_CONFIG = {
   // Música de fondo (se inicia al pulsar "Abrir invitación")
   // Volumen suave 0–1; el archivo está en /audio/marry-you.mp3
   backgroundMusic: {
-    src: 'audio/marry-you.mp3',
-    volume: 0.35,
+    src: 'assets/audio/boda.mp3',
+    volume: 0.3,
     loop: true,
   },
 

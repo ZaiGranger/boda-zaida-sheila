@@ -1,7 +1,7 @@
 /* ==========================================================================
-   EDITORIAL HIGH-END — Capa de acabado ultraprofesional
-   Tipografía cuidada, glassmorphism, aire generoso, microinteracciones
-   Se carga DESPUÉS de main.css y watercolor.css para refinar sin romper
+   EDITORIAL HIGH-END — Acabado ultraprofesional
+   Tipografía Pinyon Script, pan de oro, glassmorphism, aire generoso
+   Se carga DESPUÉS de main.css y watercolor.css
    ========================================================================== */
 
 :root {
@@ -9,8 +9,19 @@
   --champagne-soft: rgba(196, 176, 137, 0.35);
   --champagne-border: rgba(184, 160, 122, 0.45);
   --glass-cream: rgba(255, 252, 247, 0.72);
-  --shadow-editorial: 0 10px 40px rgba(58, 58, 58, 0.07);
-  --shadow-editorial-lg: 0 20px 60px rgba(58, 58, 58, 0.1);
+  --shadow-editorial: 0 20px 40px rgba(0, 0, 0, 0.04);
+  --shadow-editorial-lg: 0 24px 48px rgba(0, 0, 0, 0.06);
+  /* Degradado “pan de oro” / gold foil */
+  --gold-foil: linear-gradient(
+    135deg,
+    #8a7340 0%,
+    #c4a882 18%,
+    #f0e6c8 42%,
+    #b8924a 58%,
+    #e8d5a3 78%,
+    #9a7b3c 100%
+  );
+  --font-script: 'Pinyon Script', cursive;
 }
 
 /* ---------- Tipografía y jerarquía ---------- */
@@ -23,7 +34,7 @@ body {
   font-family: 'Josefin Sans', sans-serif !important;
   font-weight: 400;
   font-size: 0.68rem;
-  letter-spacing: 0.38em !important;
+  letter-spacing: 0.28em !important; /* ~2.5–3px */
   text-transform: uppercase;
 }
 
@@ -36,8 +47,11 @@ body {
 
 .section-title--script,
 .hero-title--script,
-.envelope-names {
-  font-family: 'Great Vibes', cursive !important;
+.envelope-names,
+.game-intro-title,
+.footer-monogram,
+.nav-brand {
+  font-family: 'Pinyon Script', cursive !important;
   letter-spacing: 0.02em;
   line-height: 1.15;
 }
@@ -58,7 +72,51 @@ body {
   letter-spacing: 0.02em;
 }
 
-/* ---------- Espaciado generoso (menos saturación) ---------- */
+/* ---------- Brillo pan de oro (iniciales, nombres, acentos) ---------- */
+.gold-foil,
+.nav-brand,
+.envelope-names,
+.hero-title--script,
+.footer-monogram {
+  background: var(--gold-foil);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  animation: foilShimmer 8s ease-in-out infinite;
+}
+
+/* El “&” del hero mantiene contraste serif dentro del foil */
+.hero-title--script em {
+  background: var(--gold-foil);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic;
+}
+
+@keyframes foilShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Fallback si el navegador no soporta background-clip en texto */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .nav-brand,
+  .envelope-names,
+  .hero-title--script,
+  .footer-monogram {
+    color: #b8924a !important;
+    -webkit-text-fill-color: unset;
+    background: none;
+  }
+}
+
+/* ---------- Espaciado generoso ---------- */
 .section {
   padding: 7.5rem 0 !important;
 }
@@ -84,7 +142,7 @@ body {
     font-size: clamp(2.8rem, 14vw, 3.8rem) !important;
   }
   .eyebrow {
-    letter-spacing: 0.28em !important;
+    letter-spacing: 0.22em !important;
     font-size: 0.62rem;
   }
 }
@@ -92,33 +150,31 @@ body {
 /* ---------- Navegación glassmorphism ---------- */
 .nav.scrolled {
   background: var(--glass-cream) !important;
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
   border-bottom: 1px solid var(--champagne-border) !important;
   box-shadow: var(--shadow-editorial);
 }
 
 .nav-link {
+  font-family: 'Josefin Sans', sans-serif;
   letter-spacing: 0.18em !important;
   transition: color 0.3s ease, opacity 0.3s ease;
 }
 
-.nav-brand {
-  letter-spacing: 0.06em;
-}
-
-/* ---------- Tarjetas y paneles: champán + sombra suave ---------- */
+/* ---------- Tarjetas: sombra suave + borde champán ---------- */
 .dresscode-card,
 .form-premium,
 .gift-panel,
 .spotify-panel,
 .game-panel,
 .memories-info,
-.location-info {
+.location-info,
+.game-ranking {
   border: 1px solid var(--champagne-border) !important;
   box-shadow: var(--shadow-editorial) !important;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -165,7 +221,7 @@ body {
   transform: scale(1.02) translateY(-2px);
 }
 
-/* ---------- Sobre de entrada más editorial ---------- */
+/* ---------- Sobre de entrada ---------- */
 .envelope-paper {
   border: 1px solid var(--champagne-soft);
   box-shadow: var(--shadow-editorial-lg) !important;
@@ -183,14 +239,14 @@ body {
 }
 
 .envelope-family {
-  letter-spacing: 0.32em !important;
+  letter-spacing: 0.28em !important;
 }
 
 .envelope-invite {
   line-height: 1.85 !important;
 }
 
-/* ---------- Reveal al scroll más suave ---------- */
+/* ---------- Reveal al scroll ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -203,7 +259,7 @@ body {
   transform: translateY(0);
 }
 
-/* ---------- Botón flotante de música ---------- */
+/* ---------- Widget música flotante (glass + EQ) ---------- */
 .fab-music {
   position: fixed;
   bottom: 1.5rem;
@@ -214,8 +270,8 @@ body {
   border-radius: 50%;
   border: 1px solid var(--champagne-border);
   background: var(--glass-cream);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
   box-shadow: var(--shadow-editorial);
   display: flex;
   align-items: center;
@@ -245,7 +301,6 @@ body {
   color: #3a3a3a;
 }
 
-/* Ecualizador animado cuando suena */
 .fab-music-eq {
   display: none;
   align-items: flex-end;
@@ -256,7 +311,7 @@ body {
 .fab-music-eq i {
   display: block;
   width: 3px;
-  background: #6d8f7e;
+  background: linear-gradient(180deg, #c4a882, #6d8f7e);
   border-radius: 1px;
   animation: eqPulse 0.9s ease-in-out infinite;
 }
@@ -279,7 +334,6 @@ body {
 .fab-music.is-paused .fab-music-icon--mute { display: none; }
 .fab-music.is-paused .fab-music-icon--note { display: block; }
 
-/* Evitar solapamiento: música a la izquierda, RSVP a la derecha */
 .fab-rsvp {
   bottom: 1.5rem;
   right: 1.5rem;
@@ -296,6 +350,25 @@ body {
     bottom: 1.15rem;
     right: 1rem;
     padding: 0.7rem 1rem;
+  }
+
+  /* Hojas acuarela: no tapar texto en móvil */
+  .leaves-corner {
+    width: min(110px, 28vw) !important;
+    height: min(110px, 28vw) !important;
+    opacity: 0.28 !important;
+  }
+  .leaves-vine--left,
+  .leaves-vine--right {
+    opacity: 0.18 !important;
+    width: min(90px, 16vw) !important;
+  }
+  .leaves-vine--top,
+  .leaves-vine--bottom {
+    display: none !important;
+  }
+  .page-leaves-bg .leaves-wash {
+    opacity: 0.5;
   }
 }
 
@@ -317,4 +390,11 @@ body {
 
 .footer-monogram {
   letter-spacing: 0.08em;
+}
+
+/* Spotify panel: mismo glass */
+.spotify-panel {
+  background: rgba(255, 252, 247, 0.7) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }

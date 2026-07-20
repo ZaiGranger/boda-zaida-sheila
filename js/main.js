@@ -118,7 +118,7 @@ function initBackgroundMusic() {
     if (source) source.src = cfg.src;
     bgAudio.load();
   }
-  bgAudio.volume = typeof cfg.volume === 'number' ? cfg.volume : 0.35;
+  bgAudio.volume = 0; // el fade-in lo sube al abrir
   bgAudio.loop = cfg.loop !== false;
 
   // Botón flotante: pausa o reanuda
@@ -148,8 +148,8 @@ function setMusicUiPlaying(isPlaying) {
 }
 
 /**
- * Arranca la música en el momento del clic (gesto de usuario = autoplay permitido).
- * Si falla (política del navegador), el botón flotante sigue disponible.
+ * Arranca la música con fade-in de volumen (0 → objetivo).
+ * Debe llamarse dentro del gesto de clic del usuario (política autoplay).
  */
 async function startBackgroundMusic() {
   if (!bgAudio || musicStarted) return;
@@ -161,14 +161,35 @@ async function startBackgroundMusic() {
     toggle.classList.add('is-visible');
   }
 
+  const cfg = WEDDING_CONFIG.backgroundMusic || {};
+  const targetVol = typeof cfg.volume === 'number' ? cfg.volume : 0.3;
+
   try {
+    // Empezar en silencio y subir suavemente
+    bgAudio.volume = 0;
     await bgAudio.play();
     setMusicUiPlaying(true);
+    fadeAudioVolume(bgAudio, 0, targetVol, 2200);
   } catch (err) {
-    // Algunos navegadores aún bloquean: el usuario puede pulsar el botón ♪
     console.warn('No se pudo iniciar el audio automáticamente:', err);
     setMusicUiPlaying(false);
   }
+}
+
+/** Interpola el volumen del audio (fade-in / fade-out) */
+function fadeAudioVolume(audio, from, to, durationMs) {
+  if (!audio) return;
+  const start = performance.now();
+  audio.volume = Math.max(0, Math.min(1, from));
+
+  function step(now) {
+    const t = Math.min(1, (now - start) / durationMs);
+    // Curva suave (ease-out)
+    const eased = 1 - (1 - t) * (1 - t);
+    audio.volume = from + (to - from) * eased;
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 // =============================================================================
