@@ -215,7 +215,12 @@ function initEnvelope() {
       nav?.classList.add('visible');
       // Hojas laterales solo a partir de aquí
       document.getElementById('page-leaves-bg')?.classList.add('is-visible');
-      setTimeout(() => main?.classList.remove('entering'), 2000);
+      // Recalcular canvas del minijuego (antes estaba oculto → tamaño 0)
+      if (typeof refreshBouquetGameCanvas === 'function') refreshBouquetGameCanvas();
+      setTimeout(() => {
+        if (typeof refreshBouquetGameCanvas === 'function') refreshBouquetGameCanvas();
+        main?.classList.remove('entering');
+      }, 2000);
     }, 2000);
   }
 

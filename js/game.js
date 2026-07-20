@@ -56,7 +56,23 @@
 
     ctx = canvas.getContext('2d');
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      if (!playing) drawIdleFrame();
+      else drawFrame();
+    });
+
+    // Cuando el contenedor pasa de oculto a visible (abrir invitación), recalcular tamaño
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => {
+        const prevW = W;
+        resizeCanvas();
+        if (W > 0 && (prevW === 0 || !playing)) drawIdleFrame();
+      });
+      ro.observe(wrap);
+      const arena = document.getElementById('game-board');
+      if (arena) ro.observe(arena);
+    }
 
     // Controles
     setupPointerControls();
@@ -70,8 +86,15 @@
     updateMuteButton();
     updateHud();
     updateHighScoreLabel();
-    drawIdleFrame();
+    // Si aún está oculto, no dibujar; se dibujará al tener tamaño real
+    if (W > 0) drawIdleFrame();
     loadLeaderboard();
+  };
+
+  /** Llamar al abrir la invitación o al mostrar la sección del juego */
+  window.refreshBouquetGameCanvas = function refreshBouquetGameCanvas() {
+    resizeCanvas();
+    if (W > 0 && !playing) drawIdleFrame();
   };
 
   // ---------------------------------------------------------------------------
@@ -80,8 +103,16 @@
   function resizeCanvas() {
     if (!canvas || !wrap) return;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cssW = wrap.clientWidth;
-    const cssH = Math.max(320, Math.min(480, Math.round(cssW * 0.72)));
+
+    // Si la sección está display:none, clientWidth es 0 → usar el ancho del panel o de la ventana
+    let cssW = wrap.clientWidth;
+    if (cssW < 40) {
+      const panel = wrap.closest('.game-panel') || wrap.closest('.container');
+      cssW = panel?.clientWidth || Math.min(480, window.innerWidth - 48);
+    }
+    cssW = Math.max(260, cssW);
+
+    const cssH = Math.max(340, Math.min(460, Math.round(cssW * 0.75)));
     wrap.style.height = `${cssH}px`;
     canvas.width = Math.floor(cssW * dpr);
     canvas.height = Math.floor(cssH * dpr);
@@ -90,10 +121,12 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     W = cssW;
     H = cssH;
-    basket.w = Math.max(64, Math.min(90, W * 0.18));
-    basket.h = basket.w * 0.38;
-    basket.y = H - basket.h - 16;
-    if (!playing) basket.x = W / 2;
+    basket.w = Math.max(64, Math.min(96, W * 0.2));
+    basket.h = basket.w * 0.4;
+    basket.y = H - basket.h - 18;
+    if (!playing || basket.x < basket.w / 2 || basket.x > W - basket.w / 2) {
+      basket.x = W / 2;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -152,11 +185,39 @@
   function showStartOverlay() {
     document.getElementById('game-start')?.classList.remove('hidden');
     document.getElementById('game-result')?.classList.add('hidden');
+    resizeCanvas();
     drawIdleFrame();
     loadLeaderboard();
   }
 
   function startGame() {
+    // IMPORTANTE: recalcular tamaño ahora que la sección es visible
+    resizeCanvas();
+    if (W < 40 || H < 40) {
+      // Un solo reintento en el siguiente frame (por si el layout aún no midió)
+      requestAnimationFrame(() => {
+        resizeCanvas();
+        if (W < 40) {
+          W = Math.min(480, window.innerWidth - 48);
+          H = Math.max(340, Math.round(W * 0.75));
+          canvas.width = Math.floor(W * dpr);
+          canvas.height = Math.floor(H * dpr);
+          canvas.style.width = `${W}px`;
+          canvas.style.height = `${H}px`;
+          wrap.style.height = `${H}px`;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          basket.w = Math.max(64, W * 0.2);
+          basket.h = basket.w * 0.4;
+          basket.y = H - basket.h - 18;
+        }
+        beginRound();
+      });
+      return;
+    }
+    beginRound();
+  }
+
+  function beginRound() {
     score = 0;
     combo = 1;
     comboTimer = 0;
@@ -166,13 +227,14 @@
     items = [];
     particles = [];
     playing = true;
-    spawnAcc = 0;
+    spawnAcc = 0.5; // primer objeto casi al instante
     lastTs = 0;
     basket.x = W / 2;
 
     document.getElementById('game-start')?.classList.add('hidden');
     document.getElementById('game-result')?.classList.add('hidden');
     updateHud();
+    drawFrame(); // primer frame visible ya
 
     cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(loop);
