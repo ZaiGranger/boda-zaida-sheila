@@ -230,24 +230,23 @@ app.post('/api/upload', upload.single('media'), (req, res) => {
 });
 
 // --- Galería ---
-// Admin: todo | Invitado: solo sus fotos de SU mesa (mesaId + token + guestId)
+// Admin: todo | Invitado con QR de mesa: TODO lo de ESA mesa (opción A)
 app.get('/api/gallery', (req, res) => {
   const gallery = readJson(GALLERY_FILE);
 
+  // Nosotras (admin): vemos absolutamente todo
   if (isAdmin(req)) return res.json(gallery);
 
   const mesaId = (req.query.mesa || '').trim();
   const token = (req.query.t || '').trim();
-  const guestId = (req.query.guestId || '').trim();
 
+  // Sin QR válido de esa mesa → no hay acceso
   const table = findTable(mesaId, token);
-  if (!table) return res.status(403).json({ error: 'Acceso no válido' });
-  if (!guestId) return res.status(401).json({ error: 'Identificación requerida' });
+  if (!table) return res.status(403).json({ error: 'Acceso no válido. Escanea el QR de tu mesa.' });
 
-  const mine = gallery.filter(
-    (item) => item.mesaId === mesaId && item.guestId === guestId
-  );
-  res.json(mine);
+  // Galería compartida de la mesa: cualquiera con el QR ve lo de su mesa
+  const deLaMesa = gallery.filter((item) => item.mesaId === mesaId);
+  res.json(deLaMesa);
 });
 
 app.post('/api/songs', (req, res) => {

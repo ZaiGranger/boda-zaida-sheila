@@ -1,5 +1,7 @@
 /**
- * Lógica común para páginas de recuerdos (acceso solo vía QR de mesa)
+ * Lógica común para páginas de recuerdos
+ * Acceso solo con QR de mesa (?mesa=...&t=...).
+ * Opción A: cada mesa ve y sube lo de SU mesa; las novias ven todo.
  */
 
 const SESSION_MESA = 'weddingMesaSession';
@@ -57,16 +59,26 @@ function getSiteUrl() {
   return 'http://localhost:3001';
 }
 
-/** Enlace que lleva el QR de una mesa */
+/**
+ * Enlace del QR de una mesa.
+ * Lleva a un portal sencillo (subir + ver galería de la mesa).
+ */
 function buildMesaQrUrl(mesaId, token) {
-  return `${getSiteUrl()}/recuerdos/subir.html?mesa=${encodeURIComponent(mesaId)}&t=${encodeURIComponent(token)}`;
+  return `${getSiteUrl()}/recuerdos/mesa.html?mesa=${encodeURIComponent(mesaId)}&t=${encodeURIComponent(token)}`;
 }
 
-/** Enlace a galería personal (misma mesa) */
+/** Enlace a la galería compartida de la mesa actual */
 function buildGaleriaUrl() {
   const mesa = getMesaSession();
   if (!mesa) return 'galeria.html';
   return `galeria.html?mesa=${encodeURIComponent(mesa.id)}&t=${encodeURIComponent(mesa.token)}`;
+}
+
+/** Enlace a subir (misma mesa) */
+function buildSubirUrl() {
+  const mesa = getMesaSession();
+  if (!mesa) return 'subir.html';
+  return `subir.html?mesa=${encodeURIComponent(mesa.id)}&t=${encodeURIComponent(mesa.token)}`;
 }
 
 /**
@@ -86,7 +98,7 @@ async function ensureMesaAccess() {
 
       const session = { id: data.mesa.id, name: data.mesa.name, token: fromUrl.token };
       saveMesaSession(session);
-      // Limpiar URL para no compartir el token por accidente en barra de direcciones
+      // Limpiar URL para no dejar el token visible en la barra
       window.history.replaceState({}, '', window.location.pathname);
       return session;
     } catch (err) {
@@ -109,17 +121,16 @@ async function ensureMesaAccess() {
 function showBlockedAccess(container) {
   container.innerHTML = `
     <div class="access-blocked">
-      <span class="access-blocked-icon">📱</span>
       <h2>Escanea el QR de tu mesa</h2>
-      <p>Esta página solo es accesible escaneando el código QR que encontrarás en tu mesa el día de la boda.</p>
-      <p class="access-hint">Cada mesa tiene su propio código. Sin él no es posible subir ni ver recuerdos.</p>
+      <p>Para subir o ver fotos hace falta el código QR de vuestra mesa el día de la boda.</p>
+      <p class="access-hint">Cada mesa tiene su propio QR. Solo veréis los recuerdos de vuestra mesa.</p>
       <a href="../index.html" class="btn btn-ghost-dark">Volver a la invitación</a>
     </div>`;
 }
 
 function escapeHtml(text) {
   const d = document.createElement('div');
-  d.textContent = text;
+  d.textContent = text == null ? '' : String(text);
   return d.innerHTML;
 }
 

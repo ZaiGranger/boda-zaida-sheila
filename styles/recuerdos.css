@@ -250,3 +250,45 @@
   text-align: center;
 }
 .admin-gallery-link { margin-top: 2rem; }
+
+.qr-fallback {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 1rem 0.5rem;
+  line-height: 1.4;
+}
+
+.mesa-card .btn-sm {
+  font-size: 0.62rem;
+  padding: 0.55rem 0.75rem;
+}
+
+/* Portal QR de mesa: dos botones claros */
+.mesa-portal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* Pie de foto en galería compartida (quién subió) */
+.gallery-item {
+  position: relative;
+}
+.gallery-caption {
+  display: block;
+  padding: 0.45rem 0.6rem 0.55rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.85);
+  border-top: 1px solid var(--border);
+}
+.lightbox-caption {
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #eee;
+  letter-spacing: 0.06em;
+}

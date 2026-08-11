@@ -1,5 +1,6 @@
 /**
- * SUBIR — Solo accesible con QR de mesa (?mesa=...&t=...)
+ * SUBIR — Acceso con QR de mesa.
+ * El nombre identifica quién subió; la galería es compartida por toda la mesa.
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -31,7 +32,7 @@ function renderGuestForm(main, mesa) {
   main.innerHTML = `
     <div class="guest-id-card">
       <h2>¿Quién eres?</h2>
-      <p>Escribe tu nombre para subir recuerdos en <strong>${escapeHtml(mesa.name)}</strong>. Solo verás lo que tú subas.</p>
+      <p>Tu nombre aparecerá junto a lo que subas en <strong>${escapeHtml(mesa.name)}</strong>. Toda la mesa podrá verlo.</p>
       <div class="form-field">
         <label for="guest-name-input">Tu nombre</label>
         <input type="text" id="guest-name-input" placeholder="Ej: María" maxlength="100" />
@@ -41,7 +42,11 @@ function renderGuestForm(main, mesa) {
 
   document.getElementById('btn-save-guest')?.addEventListener('click', () => {
     const name = document.getElementById('guest-name-input')?.value.trim();
-    if (!name) { alert('Escribe tu nombre'); return; }
+    if (!name) {
+      alert('Escribe tu nombre');
+      return;
+    }
+    // Guardamos nombre + id (el id ayuda a etiquetar; la galería es de toda la mesa)
     saveGuest(name, getGuestId() || crypto.randomUUID());
     renderUploadForm(main, mesa);
   });
@@ -68,13 +73,13 @@ function renderUploadForm(main, mesa) {
       <p class="form-feedback" id="upload-status"></p>
     </form>
     <div class="recuerdos-links">
-      <a href="${buildGaleriaUrl()}" class="btn btn-ghost-dark btn-full">Ver mis recuerdos</a>
+      <a href="${buildGaleriaUrl()}" class="btn btn-ghost-dark btn-full">Ver fotos de la mesa</a>
       <button class="btn btn-ghost-dark btn-full" id="btn-change-guest" type="button">Cambiar nombre</button>
     </div>`;
 
   initUploadHandlers(mesa);
   document.getElementById('btn-change-guest')?.addEventListener('click', () => {
-    if (confirm('¿Cambiar de usuario? Solo verás los recuerdos del nuevo nombre.')) {
+    if (confirm('¿Cambiar de nombre para las próximas subidas?')) {
       clearGuest();
       renderGuestForm(main, mesa);
     }
@@ -89,10 +94,16 @@ function initUploadHandlers(mesa) {
   const status = document.getElementById('upload-status');
 
   ['dragenter', 'dragover'].forEach((e) => {
-    fileDrop?.addEventListener(e, (ev) => { ev.preventDefault(); fileDrop.classList.add('dragover'); });
+    fileDrop?.addEventListener(e, (ev) => {
+      ev.preventDefault();
+      fileDrop.classList.add('dragover');
+    });
   });
   ['dragleave', 'drop'].forEach((e) => {
-    fileDrop?.addEventListener(e, (ev) => { ev.preventDefault(); fileDrop.classList.remove('dragover'); });
+    fileDrop?.addEventListener(e, (ev) => {
+      ev.preventDefault();
+      fileDrop.classList.remove('dragover');
+    });
   });
   fileDrop?.addEventListener('drop', (ev) => {
     if (ev.dataTransfer?.files?.length) {
@@ -107,7 +118,10 @@ function initUploadHandlers(mesa) {
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const file = fileInput?.files?.[0];
-    if (!file) { showStatus(status, 'Selecciona un archivo', 'error'); return; }
+    if (!file) {
+      showStatus(status, 'Selecciona un archivo', 'error');
+      return;
+    }
 
     const fd = new FormData();
     fd.append('media', file);
@@ -122,7 +136,7 @@ function initUploadHandlers(mesa) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       if (data.guestId) saveGuest(getGuestName(), data.guestId);
-      showStatus(status, '¡Recuerdo subido!', 'success');
+      showStatus(status, '¡Recuerdo subido! Ya lo ve toda la mesa.', 'success');
       form.reset();
       if (fileSelected) fileSelected.textContent = '';
       if (typeof confetti === 'function') {

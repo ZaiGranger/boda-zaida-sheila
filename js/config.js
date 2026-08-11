@@ -92,7 +92,7 @@ const WEDDING_CONFIG = {
     { q: '¿Puedo venir con acompañante?', a: 'Indícalo al confirmar tu asistencia por WhatsApp para poder organizarlo todo correctamente.' },
     { q: '¿Hay parking cerca?', a: 'Sí, hay zonas de aparcamiento en las inmediaciones del lugar de la ceremonia.' },
     { q: '¿Hasta qué hora dura la fiesta?', a: 'El evento va de 12:00 a 01:00 de la madrugada. A partir de las 19:00 es la hora de los jóvenes, donde solo permanecen amigos en el local.' },
-    { q: '¿Puedo ver todas las fotos de la boda?', a: 'Cada invitado solo ve los recuerdos que ha subido él o ella. Zaida y Sheila tienen acceso a toda la galería.' },
-    { q: '¿Cómo subo fotos del evento?', a: 'Escanea el código QR que encontrarás en tu mesa el día de la boda. Cada mesa tiene su propio QR.' },
+    { q: '¿Cómo subo o veo fotos del evento?', a: 'Escanea el QR de tu mesa. Podrás subir fotos/vídeos y ver todo lo que haya subido tu mesa. Cada mesa tiene su propio QR.' },
+    { q: '¿Puedo ver las fotos de otras mesas?', a: 'No: cada mesa solo ve sus recuerdos. Zaida y Sheila tienen acceso a toda la galería.' },
   ],
 };

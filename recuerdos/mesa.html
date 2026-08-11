@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Tu mesa · Zaida & Sheila</title>
+    <!--
+      Portal al que apunta el QR de cada mesa.
+      Desde aquí el invitado elige: subir foto/vídeo o ver la galería de SU mesa.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Josefin+Sans:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/recuerdos.css" />
+    <link rel="stylesheet" href="../styles/white-planner.css" />
+  </head>
+  <body class="page-recuerdos">
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <header class="recuerdos-header">
+      <p class="eyebrow">Zaida & Sheila</p>
+      <h1 id="mesa-portal-title">Tu mesa</h1>
+      <p class="recuerdos-subtitle" id="mesa-portal-sub">Sube y mira los recuerdos de vuestra mesa</p>
+    </header>
+
+    <main class="recuerdos-main container" id="main-content">
+      <p class="gallery-empty">Abriendo tu mesa...</p>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/recuerdos-common.js"></script>
+    <script>
+      // Pequeño portal: valida el QR y ofrece dos caminos claros
+      document.addEventListener('DOMContentLoaded', async () => {
+        const main = document.getElementById('main-content');
+        const title = document.getElementById('mesa-portal-title');
+        const sub = document.getElementById('mesa-portal-sub');
+
+        try {
+          const mesa = await ensureMesaAccess();
+          if (!mesa) {
+            showBlockedAccess(main);
+            return;
+          }
+
+          if (title) title.textContent = mesa.name;
+          if (sub) sub.textContent = 'Solo vuestra mesa ve estos recuerdos. Zaida y Sheila ven todas las mesas.';
+
+          main.innerHTML = `
+            <div class="mesa-portal-actions">
+              <a href="${buildSubirUrl()}" class="btn btn-gold btn-full">Subir foto o vídeo</a>
+              <a href="${buildGaleriaUrl()}" class="btn btn-ghost-dark btn-full">Ver fotos de la mesa</a>
+            </div>
+            <p class="form-hint" style="text-align:center;margin-top:1.25rem">
+              Si cambias de móvil, vuelve a escanear el QR de la mesa.
+            </p>`;
+        } catch {
+          showBlockedAccess(main);
+        }
+      });
+    </script>
+  </body>
+</html>

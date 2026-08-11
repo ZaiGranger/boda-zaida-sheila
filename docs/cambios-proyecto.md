@@ -1,5 +1,29 @@
 # Cambios del proyecto
 
+## 2026-08-11 — Fix QR admin: descargar y eliminar (bug fix)
+
+**Archivos:** `recuerdos/admin.html`, `js/recuerdos-admin.js`, `styles/recuerdos.css`
+
+**Tipo:** bug fix
+
+**Qué se cambió:** La librería QR del CDN daba 404 y rompía los botones. Cambiada a qrcodejs; Descargar/Eliminar/Copiar enlace funcionan aunque falle el dibujo del QR.
+
+**Antes:** No se podía descargar QR ni eliminar mesas.
+
+**Resultado:** QR visibles, descargables y mesas eliminables.
+
+## 2026-08-11 — Galería compartida por mesa (opción A) (feature)
+
+**Archivos:** `server/index.js`, `js/recuerdos-*.js`, `recuerdos/mesa.html`, `recuerdos/galeria.html`, `recuerdos/admin.html`, `index.html`, `js/config.js`, `styles/recuerdos.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** Quien tiene el QR de una mesa ve y sube todo lo de ESA mesa. Portal `mesa.html` (subir o ver). Admin sigue viendo todas las mesas. FAQ y sección Recuerdos actualizados.
+
+**Antes:** Cada invitado solo veía sus propias fotos.
+
+**Resultado:** 4 (o N) QRs independientes; privacidad por mesa; novias ven todo.
+
 ## 2026-08-11 — Hover en menú superior (enhancement)
 
 **Archivos:** `styles/white-planner.css`, `index.html`
