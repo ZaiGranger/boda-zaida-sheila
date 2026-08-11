@@ -8,9 +8,9 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "20"
-      # Contraseña fija del panel admin (mesas / QR / galería completa)
+      # Contraseña del panel admin (mesas / QR / galería completa)
       - key: ADMIN_PASSWORD
-        value: ZaidaSheila2027
+        value: yHpIqoQWqjGBk2wNX8kmkWvz2Pr2LHG6cgpiMuLoKYQ=
       - key: SPOTIFY_CLIENT_ID
         sync: false
       - key: SPOTIFY_CLIENT_SECRET

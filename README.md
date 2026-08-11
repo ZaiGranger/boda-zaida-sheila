@@ -12,7 +12,7 @@ npm start
 - Invitación: http://localhost:3001
 - Admin mesas/QR: http://localhost:3001/recuerdos/admin.html
 
-**Contraseña admin por defecto:** `ZaidaSheila2027`
+**Contraseña admin:** `yHpIqoQWqjGBk2wNX8kmkWvz2Pr2LHG6cgpiMuLoKYQ=`
 
 ## Recuerdos por mesa (QR)
 

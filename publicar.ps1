@@ -121,7 +121,7 @@ Write-Host "Creando servicio en Render..." -ForegroundColor Yellow
     --branch main `
     --build-command "npm install" `
     --start-command "npm start" `
-    --env-var "ADMIN_PASSWORD=ZaidaSheila2027" `
+    --env-var "ADMIN_PASSWORD=yHpIqoQWqjGBk2wNX8kmkWvz2Pr2LHG6cgpiMuLoKYQ=" `
     --env-var "NODE_VERSION=20" `
     --output json `
     --confirm

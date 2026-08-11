@@ -21,9 +21,9 @@ const TABLES_FILE = path.join(DATA_DIR, 'tables.json');
 const SONGS_FILE = path.join(DATA_DIR, 'songs.json');
 const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ZaidaSheila2027';
-
-// Nunca imprimir la contraseña en logs (en Render se veía en claro)
+// Contraseña admin oficial (misma en local y producción si no hay otra en env)
+const ADMIN_PASSWORD =
+  process.env.ADMIN_PASSWORD || 'yHpIqoQWqjGBk2wNX8kmkWvz2Pr2LHG6cgpiMuLoKYQ=';
 
 // Playlist colaborativa (configurable en Render sin tocar código)
 const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi';

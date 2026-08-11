@@ -1,5 +1,15 @@
 # Cambios del proyecto
 
+## 2026-08-11 — Contraseña admin oficial fijada (config)
+
+**Archivos:** `render.yaml`, `server/index.js`, `README.md`, `publicar.ps1`
+
+**Tipo:** configuración
+
+**Qué se cambió:** Se guarda como contraseña oficial de admin la que ya usa Render (la larga), para local y docs.
+
+**Resultado:** Misma clave en local y producción.
+
 ## 2026-08-11 — Fix QR admin: descargar y eliminar (bug fix)
 
 **Archivos:** `recuerdos/admin.html`, `js/recuerdos-admin.js`, `styles/recuerdos.css`
@@ -179,7 +189,7 @@
 
 **Qué se cambió:** Datos reales de historia y programa; dress code libre/elegante; subida y galería en páginas aparte; privacidad (invitados solo ven sus archivos; novias ven todo con contraseña); QR corregido en `qr.html`.
 
-**Contraseña admin por defecto:** `ZaidaSheila2027` (cambiar con variable `ADMIN_PASSWORD`).
+**Contraseña admin:** la de `ADMIN_PASSWORD` en Render / `render.yaml` (ver README).
 
 ## 2026-07-13 — Rediseño premium (enhancement)
 

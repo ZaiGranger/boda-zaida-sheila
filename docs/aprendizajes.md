@@ -2,13 +2,13 @@
 
 ## Contraseña admin en Render
 
-**Contexto:** Login admin fallaba en producción con `ZaidaSheila2027`.
+**Contexto:** Login admin fallaba en producción con la clave corta antigua.
 
-**Problema:** En `render.yaml`, `ADMIN_PASSWORD` tenía `generateValue: true` → Render creó una contraseña aleatoria distinta a la local. Además el servidor la imprimía en logs.
+**Problema:** `generateValue: true` en Render creó otra contraseña; local y docs no coincidían.
 
-**Solución:** Usar la contraseña real de Render (o fijar `ADMIN_PASSWORD` en el dashboard). Dejar valor fijo en `render.yaml` y no loguear secretos.
+**Solución:** Fijar en `render.yaml` / código / README la contraseña larga que ya funciona en Render. No imprimir secretos en logs.
 
-**Regla:** Nunca `generateValue` para contraseñas que la pareja deba recordar; nunca imprimir secretos en consola.
+**Regla:** Una sola contraseña documentada; nunca `generateValue` para claves que debáis recordar.
 
 ## Galería por mesa vs por invitado
 
