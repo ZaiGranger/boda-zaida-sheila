@@ -1,5 +1,17 @@
 # Cambios del proyecto
 
+## 2026-08-11 — Estilo White Planner (feature)
+
+**Archivos:** `styles/white-planner.css`, `index.html`, `js/config.js`, `js/main.js`, `styles/watercolor.css`, `styles/editorial.css`
+
+**Tipo:** feature
+
+**Qué se cambió:** Paleta de 3 colores (crema, salvia, champán + tinta); botones con 3 hovers diferenciados; cuenta atrás en cajas limpias; textos más cortos; iconos lineales en minuto a minuto; ornamentos de hoja; tipografía Outfit.
+
+**Antes:** Más colores, botones poco diferenciados, textos largos, contador con separadores.
+
+**Resultado:** Aspecto editorial limpio tipo The White Planner 2025–2026, sin saturar y con mejor contraste.
+
 ## 2026-07-20 — Acabado high-end: Pinyon Script, pan de oro, OG y audio fade (enhancement)
 
 **Archivos:** `index.html`, `styles/editorial.css`, `styles/main.css`, `styles/watercolor.css`, `js/main.js`, `js/config.js`, `assets/audio/boda.mp3`, `images/og-cover.png`

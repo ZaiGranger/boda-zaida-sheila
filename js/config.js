@@ -48,44 +48,44 @@ const WEDDING_CONFIG = {
   couplePhoto: 'images/couple.jpg',
 
   giftMessage:
-    'Vuestra presencia es el regalo más valioso que podemos recibir. Si deseáis hacernos un detalle, lo recibiremos con todo nuestro cariño en efectivo el día de la boda. ¡Gracias por acompañarnos en este momento tan especial!',
+    'Vuestra presencia es el mejor regalo. Si queréis un detalle, preferimos efectivo el día del evento.',
 
   story: [
     {
       year: 'Febrero 2020',
       title: 'El primer encuentro',
-      text: 'Nos conocimos en febrero de 2020, justo un mes antes de la cuarentena. Llevábamos poco tiempo conociéndonos cuando, en marzo, nos confinaron… pero el interés entre nosotras permaneció, día tras día, hasta que por fin pudimos volver a vernos.',
+      text: 'Nos conocimos un mes antes de la cuarentena. El interés siguió, día a día, hasta vernos de nuevo.',
     },
     {
       year: '2023',
       title: 'Un sí en Disneyland Paris',
-      text: 'Zaida le pidió matrimonio a Sheila en el lugar más mágico del mundo: Disneyland Paris. Un momento de cuento de hadas que recordaremos para siempre.',
+      text: 'Zaida le pidió matrimonio a Sheila en Disneyland Paris. Un momento de cuento.',
     },
     {
       year: '2025',
       title: 'Nuestro primer hogar',
-      text: 'Dimos un paso más juntas y nos compramos nuestra primera casa. El lugar donde construimos nuestro futuro como familia.',
+      text: 'Compramos nuestra primera casa. El lugar donde construimos el futuro.',
     },
     {
       year: '2027',
       title: 'El gran día',
-      text: 'Por fin llega el momento de decir «sí, quiero» rodeadas de las personas que más queremos. ¡Nos casamos!',
+      text: 'El «sí, quiero», rodeadas de quienes más queremos.',
     },
   ],
 
   schedule: [
-    { time: '12:00', title: 'Ceremonia', desc: 'El momento más esperado. Calle Literato Azorín 32, Valencia.' },
-    { time: '13:00', title: 'Comida', desc: 'Banquete nupcial para disfrutar todos juntos.' },
-    { time: '—', title: 'Postre', desc: 'Momento dulce para endulzar la celebración.' },
-    { time: '✨', title: 'Sorpresas', desc: 'Hay sorpresas preparadas… ¡no podemos desvelarlas!' },
-    { time: '19:00', title: 'Hora de los jóvenes', desc: 'A partir de las 19:00 solo permanecen amigos en el local para celebrarlo por todo lo alto.' },
-    { time: '01:00', title: 'Fin del evento', desc: 'Cierre de la fiesta (hora del día siguiente).' },
+    { time: '12:00', title: 'Ceremonia', desc: 'Calle Literato Azorín 32, Valencia.', icon: 'rings' },
+    { time: '13:00', title: 'Comida', desc: 'Banquete juntos.', icon: 'plate' },
+    { time: '—', title: 'Postre', desc: 'Momento dulce.', icon: 'cake' },
+    { time: '✨', title: 'Sorpresas', desc: 'Hay más… ¡sin spoilers!', icon: 'spark' },
+    { time: '19:00', title: 'Hora de los jóvenes', desc: 'A partir de las 19:00, fiesta con amigos.', icon: 'music' },
+    { time: '01:00', title: 'Fin', desc: 'Cierre de la celebración.', icon: 'moon' },
   ],
 
   dressCode: {
     title: 'Ven como quieras',
-    description: 'Queremos que os sintáis cómodos y vosotros mismos. Podéis venir como cada uno quiera, aunque si podéis, preferimos un estilo arreglado o elegante.',
-    tips: ['A vuestro gusto y comodidad', 'Preferiblemente arreglado / elegante', 'Calzado cómodo para bailar'],
+    description: 'Cómodos y vosotros mismos. Si podéis, estilo arreglado o elegante.',
+    tips: ['A vuestro gusto', 'Preferible arreglado / elegante', 'Calzado cómodo para bailar'],
   },
 
   faq: [

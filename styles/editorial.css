@@ -163,17 +163,13 @@
   letter-spacing: 0.14em;
 }
 
-/* ---------- Botones ---------- */
+/* ---------- Botones (microinteracción base; variantes en white-planner.css) ---------- */
 .btn {
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease, box-shadow 0.3s ease !important;
-}
-.btn:hover {
-  transform: scale(1.02) translateY(-1px);
+  transition: transform 0.28s ease, background-color 0.28s ease, color 0.28s ease,
+    border-color 0.28s ease, box-shadow 0.28s ease !important;
 }
 .btn-envelope {
-  letter-spacing: 0.28em !important;
-  border-color: var(--champagne) !important;
+  letter-spacing: 0.2em !important;
 }
 
 /* ---------- Sobre (aspecto clásico) ---------- */

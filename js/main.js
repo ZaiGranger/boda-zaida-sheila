@@ -391,9 +391,20 @@ function initSchedule() {
   const grid = document.getElementById('schedule-grid');
   if (!grid || !WEDDING_CONFIG.schedule) return;
 
+  // Iconos SVG sencillos (línea) acordes al estilo limpio de la boda
+  const scheduleIcons = {
+    rings: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="10" r="3"/><circle cx="16" cy="10" r="3"/><path d="M11 10h2"/></svg>',
+    plate: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/></svg>',
+    cake: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 18h16M6 18V10h12v8"/><path d="M9 10V7M12 10V6M15 10V7"/></svg>',
+    spark: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></svg>',
+    music: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 18a3 3 0 003 3 3 3 0 003-3V6a2 2 0 114 0"/><path d="M9 14V6a2 2 0 10-4 0"/></svg>',
+    moon: '<svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 119.5 3a7 7 0 0011.5 11.5z"/></svg>',
+  };
+
   grid.innerHTML = WEDDING_CONFIG.schedule.map((item) => `
     <div class="schedule-item">
       <div class="schedule-time">${escapeHtml(item.time)}</div>
+      ${scheduleIcons[item.icon] || scheduleIcons.spark}
       <div>
         <h3 class="schedule-title">${escapeHtml(item.title)}</h3>
         <p class="schedule-desc">${escapeHtml(item.desc)}</p>

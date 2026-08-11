@@ -1444,7 +1444,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .main-content.entering .hero-content .eyebrow { animation-delay: 0.1s; }
 .main-content.entering .hero-content .hero-title { animation-delay: 0.25s; }
-.main-content.entering .hero-content .hero-divider { animation-delay: 0.4s; }
+.main-content.entering .hero-content .ornamento { animation-delay: 0.4s; }
 .main-content.entering .hero-content .hero-date { animation-delay: 0.5s; }
 .main-content.entering .hero-content .hero-photo-wrap { animation-delay: 0.65s; }
 .main-content.entering .hero-content .hero-quote { animation-delay: 0.8s; }

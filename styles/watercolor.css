@@ -4,20 +4,21 @@
    ========================================================================== */
 
 :root {
-  --paper: #f5f0e8;
-  --paper-dark: #ebe4d8;
+  --paper: #f7f3ec;
+  --paper-dark: #efe9df;
   --paper-bar: #e8e0d4;
-  --ink: #3a3a3a;
-  --ink-muted: #6b6560;
-  --ink-light: #8a847c;
-  --sage-wc: #8aab9a;
-  --sage-wc-light: #b5cfc0;
-  --sage-wc-dark: #6d8f7e;
-  --gold-wc: #b8a07a;
+  --ink: #2c2c2c;
+  --ink-muted: #5c5854;
+  --ink-light: #7a756f;
+  --sage-wc: #7a9688;
+  --sage-wc-light: #d5e0da;
+  --sage-wc-dark: #5f7a6a;
+  --gold-wc: #c4b089;
   --seal-red: #c45c4a;
   --seal-red-dark: #a84838;
   --font-script: 'Great Vibes', cursive;
   --font-serif: 'Lora', Georgia, serif;
+  --font-body: 'Outfit', 'Josefin Sans', system-ui, sans-serif;
 }
 
 /* Fondo general tipo papel acuarela */
@@ -538,15 +539,15 @@ body {
 .schedule-time { color: var(--sage-wc-dark) !important; }
 .schedule-title { font-family: var(--font-serif); }
 
-/* Botones */
+/* Botones — el estilo final lo define white-planner.css (3 variantes + hover) */
 .btn-gold {
-  background: var(--ink) !important;
-  border-color: var(--ink) !important;
-  color: var(--paper) !important;
+  background: var(--sage-wc-dark);
+  border-color: var(--sage-wc-dark);
+  color: #fff;
 }
 .btn-gold:hover {
-  background: var(--sage-wc-dark) !important;
-  border-color: var(--sage-wc-dark) !important;
+  background: #4a6356;
+  border-color: #4a6356;
 }
 
 /* Footer */
