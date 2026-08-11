@@ -484,8 +484,65 @@ body {
   border-bottom: 1px solid rgba(95, 122, 106, 0.15) !important;
 }
 
-.nav-link:hover {
+/*
+  Enlaces del menú superior (INICIO, HISTORIA…).
+  Estado normal: tinta oscura para leerse bien sobre crema.
+  Hover: salvia + subrayado que crece — se distingue del resto de botones.
+*/
+.nav-link {
+  position: relative;
+  font-family: var(--font-body) !important;
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase;
+  color: var(--charcoal) !important; /* contraste alto sobre crema */
+  padding: 0.5rem 0.85rem !important;
+  transition:
+    color 0.28s ease,
+    transform 0.28s ease !important;
+}
+
+/* Línea inferior que aparece / crece al pasar el ratón */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 0.2rem;
+  height: 1.5px;
+  background: var(--sage-dark);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.28s ease;
+  pointer-events: none;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
   color: var(--sage-dark) !important;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+.nav-link.active {
+  color: var(--sage-dark) !important;
+}
+
+/* Monograma Z&S también reacciona al hover */
+.nav-brand {
+  transition: color 0.28s ease, transform 0.28s ease !important;
+}
+.nav-brand:hover {
+  color: var(--sage-dark) !important;
+  -webkit-text-fill-color: var(--sage-dark) !important;
+  transform: translateY(-1px);
 }
 
 .footer {

@@ -1,5 +1,17 @@
 # Cambios del proyecto
 
+## 2026-08-11 — Hover en menú superior (enhancement)
+
+**Archivos:** `styles/white-planner.css`, `index.html`
+
+**Tipo:** enhancement
+
+**Qué se cambió:** Enlaces del nav con contraste más alto y hover (salvia + subrayado animado); monograma Z&S también reacciona.
+
+**Antes:** Enlaces muy claros, hover casi imperceptible.
+
+**Resultado:** Menú legible y con feedback claro al pasar el cursor.
+
 ## 2026-08-11 — Estilo White Planner (feature)
 
 **Archivos:** `styles/white-planner.css`, `index.html`, `js/config.js`, `js/main.js`, `styles/watercolor.css`, `styles/editorial.css`

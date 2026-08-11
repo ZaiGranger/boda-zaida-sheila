@@ -89,16 +89,15 @@
   font-style: italic;
 }
 
-/* Acento dorado sutil SOLO con color sólido (no gradient clip) */
-.nav-brand:hover,
-.footer-monogram {
-  color: #9a7b3c !important;
-  -webkit-text-fill-color: #9a7b3c !important;
-}
-
+/* Acento al hover del monograma: lo define white-planner (salvia) */
 .nav-brand {
   color: #3a3a3a !important;
   -webkit-text-fill-color: #3a3a3a !important;
+}
+
+.footer-monogram {
+  color: #9a7b3c !important;
+  -webkit-text-fill-color: #9a7b3c !important;
 }
 
 /* ---------- Espaciado ---------- */
