@@ -19,8 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function login() {
-  const password = document.getElementById('admin-password')?.value;
+  // trim: evita fallos por espacios al pegar la contraseña
+  const password = document.getElementById('admin-password')?.value?.trim();
   const status = document.getElementById('login-status');
+
+  if (!password) {
+    showStatus(status, 'Escribe la contraseña', 'error');
+    return;
+  }
 
   try {
     const res = await fetch('/api/admin/verify', {

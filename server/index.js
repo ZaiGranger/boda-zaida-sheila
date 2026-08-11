@@ -23,6 +23,8 @@ const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ZaidaSheila2027';
 
+// Nunca imprimir la contraseña en logs (en Render se veía en claro)
+
 // Playlist colaborativa (configurable en Render sin tocar código)
 const SPOTIFY_PLAYLIST_URL = process.env.SPOTIFY_PLAYLIST_URL || 'https://open.spotify.com/playlist/3VqjpPnHfKktz8tc5pMqbi';
 const SPOTIFY_COLLABORATOR_URL = process.env.SPOTIFY_COLLABORATOR_URL || SPOTIFY_PLAYLIST_URL;
@@ -371,5 +373,6 @@ app.get('/api/spotify/search', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`💒 Web activa en http://localhost:${PORT}`);
   console.log(`📷 Admin mesas/QR: /recuerdos/admin.html`);
-  console.log(`🔐 Contraseña admin: ${ADMIN_PASSWORD}`);
+  // No imprimir la contraseña: en Render los logs son visibles y es un riesgo
+  console.log(`🔐 Admin listo (variable ADMIN_PASSWORD${process.env.ADMIN_PASSWORD ? ' configurada' : ' por defecto'})`);
 });

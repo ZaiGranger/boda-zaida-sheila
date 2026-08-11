@@ -1,5 +1,15 @@
 # Aprendizajes
 
+## Contraseña admin en Render
+
+**Contexto:** Login admin fallaba en producción con `ZaidaSheila2027`.
+
+**Problema:** En `render.yaml`, `ADMIN_PASSWORD` tenía `generateValue: true` → Render creó una contraseña aleatoria distinta a la local. Además el servidor la imprimía en logs.
+
+**Solución:** Usar la contraseña real de Render (o fijar `ADMIN_PASSWORD` en el dashboard). Dejar valor fijo en `render.yaml` y no loguear secretos.
+
+**Regla:** Nunca `generateValue` para contraseñas que la pareja deba recordar; nunca imprimir secretos en consola.
+
 ## Galería por mesa vs por invitado
 
 **Contexto:** Sistema de QR de mesas para fotos de boda.
